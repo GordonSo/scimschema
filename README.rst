@@ -4,25 +4,6 @@ System for Cross-domain Identity Management
 
 ==========
 
-|PyPI| |Pythons| |Travis| |AppVeyor|
-
-.. |PyPI| image:: https://img.shields.io/pypi/v/jsonschema.svg
-   :alt: PyPI version
-   :target: https://pypi.python.org/pypi/jsonschema
-
-.. |Pythons| image:: https://img.shields.io/pypi/pyversions/jsonschema.svg
-   :alt: Supported Python versions
-   :target: https://pypi.python.org/pypi/jsonschema
-
-.. |Travis| image:: https://travis-ci.org/Julian/jsonschema.svg?branch=master
-   :alt: Travis build status
-   :target: https://travis-ci.org/Julian/jsonschema
-
-.. |AppVeyor| image:: https://ci.appveyor.com/api/projects/status/adtt0aiaihy6muyn?svg=true
-   :alt: AppVeyor build status
-   :target: https://ci.appveyor.com/project/Julian/jsonschema
-
-
 ``scimschema`` is an implementation of `SCIM Schema <http://www.simplecloud.info/>` for Python (supporting Python 3+).
 
 .. code-block:: python
@@ -51,32 +32,13 @@ System for Cross-domain Identity Management
     ... )                                   # doctest: +IGNORE_EXCEPTION_DETAIL
     Traceback (most recent call last):
         ...
-    ValidationError: 'Invalid' is not of type 'number'
+    AssertError: 'Invalid' is not of type 'number'
 
 Features
 --------
 
 * Full support for
-  `Draft 6 <https://python-jsonschema.readthedocs.io/en/latest/validate/#jsonschema.Draft6Validator>`_,
-  `Draft 4 <https://python-jsonschema.readthedocs.io/en/latest/validate/#jsonschema.Draft4Validator>`_
-  and
-  `Draft 3 <https://python-jsonschema.readthedocs.io/en/latest/validate/#jsonschema.Draft3Validator>`_
-
-* `Lazy validation <https://python-jsonschema.readthedocs.io/en/latest/validate/#jsonschema.IValidator.iter_errors>`_
-  that can iteratively report *all* validation errors.
-
-* Small and extensible
-
-* `Programmatic querying <https://python-jsonschema.readthedocs.io/en/latest/errors/#module-jsonschema>`_
-  of which properties or items failed validation.
-
-
-Release Notes
--------------
-
-Version 2.6.0 drops support for Python 2.6.X (ha ha) and contains a
-number of small improvements in error messages, as well as a bug fix for
-``ErrorTree``.
+  `SCIM 2.0 <http://www.simplecloud.info/#Specification>`_,
 
 
 Running the Test Suite
@@ -93,42 +55,11 @@ Of course you're also free to just run the tests on a single version with your
 favorite test runner. The tests live in the ``jsonschema.tests`` package.
 
 
-Benchmarks
-----------
-
-``jsonschema``'s benchmarks make use of `perf <https://perf.readthedocs.io>`_.
-
-Running them can be done via ``tox -e perf``, or by invoking the ``perf``
-commands externally (after ensuring that both it and ``jsonschema`` itself are
-installed)::
-
-    $ python -m perf jsonschema/benchmarks/test_suite.py --hist --output results.json
-
-To compare to a previous run, use::
-
-    $ python -m perf compare_to --table reference.json results.json
-
-See the ``perf`` documentation for more details.
-
-
-Community
----------
-
-There's a `mailing list <https://groups.google.com/forum/#!forum/jsonschema>`_
-for this implementation on Google Groups.
-
-Please join, and feel free to send questions there.
-
-
 Contributing
 ------------
 
 I'm Gordon So.
 
-``scimschema`` is on `GitHub <http://github.com/Julian/jsonschema>`_.
+``scimschema`` is on `GitHub <https://github.com/GordonSo/scimschema>`_.
 
-Get in touch, via GitHub or otherwise, if you've got something to contribute,
-it'd be most welcome!
-
-You can also generally find me on Freenode (nick: ``tos9``) in various
-channels, including ``#python``.
+Get in touch, via GitHub or otherwise, if contributors are most welcome!
