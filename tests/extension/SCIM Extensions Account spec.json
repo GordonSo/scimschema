@@ -1,0 +1,209 @@
+{
+    "id": "urn:huddle:params:scim:schemas:extension:2.0:Account",
+    "name": "HuddleAccount",
+    "description": "An Account is a subset of Workspaces within a Company",
+    "attributes": [{
+            "name": "status",
+            "type": "string",
+            "multiValued": false,
+            "description": "The status of the workspace",
+            "required": false,
+            "canonicalValues": [
+                "active",
+                "suspended",
+                "deleted",
+                "subscribing",
+                "paymentFailed",
+                "suspendedForMaintenance"
+            ],
+            "mutability": "readWrite",
+            "returned": "default"
+        },
+        {
+            "name": "ipRestrictionsEnabled",
+            "type": "boolean",
+            "multiValued": false,
+            "description": "Do apply any IP Restrictions to the account?",
+            "required": false,
+            "mutability": "readWrite",
+            "returned": "request"
+        },
+        {
+            "name": "package",
+            "type": "complex",
+            "multiValued": false,
+            "description": "The package under which this account has been created",
+            "required": false,
+            "mutability": "readWrite",
+            "subAttributes": [{
+                    "name": "name",
+                    "type": "string",
+                    "multiValued": false,
+                    "description": "What is the name of this package",
+                    "required": false,
+                    "mutability": "readOnly",
+                    "returned": "request"
+                },
+                {
+                    "name": "supportType",
+                    "type": "string",
+                    "multiValued": false,
+                    "description": "What support is offered to this account",
+                    "required": false,
+                    "mutability": "readOnly",
+                    "canonicalValues": [
+                        "none",
+                        "email",
+                        "phone",
+                        "expert"
+                    ],
+                    "returned": "request"
+                },
+                {
+                    "name": "allowBrandingFlag",
+                    "type": "boolean",
+                    "multiValued": false,
+                    "description": "Have we allowed custom branding for this account",
+                    "required": false,
+                    "mutability": "readOnly",
+                    "returned": "request"
+                },
+                {
+                    "name": "fileRetentionPeriod",
+                    "type": "integer",
+                    "multiValued": false,
+                    "description": "How long will we retain files after deletion of workspace",
+                    "required": false,
+                    "mutability": "readOnly",
+                    "returned": "request"
+                },
+                {
+                    "name": "fileRequestsEnabled",
+                    "type": "boolean",
+                    "multiValued": false,
+                    "description": "Does this package support File Requests",
+                    "required": false,
+                    "mutability": "readOnly",
+                    "returned": "request"
+                },
+                {
+                    "name": "accountPackage",
+                    "type": "reference",
+                    "multiValued": false,
+                    "description": "The URL for the Account Package",
+                    "required": true,
+                    "mutability": "readWrite",
+                    "returned": "request"
+                }
+            ]
+        },
+        {
+            "name": "domain",
+            "type": "complex",
+            "multiValued": false,
+            "description": "What custom sub-domain does the account belong to",
+            "required": false,
+            "mutability": "readWrite",
+            "subAttributes": [{
+                    "name": "domain",
+                    "type": "reference",
+                    "multiValued": false,
+                    "description": "The URL for the Domain",
+                    "required": true,
+                    "mutability": "readWrite",
+                    "returned": "request"
+                },
+                {
+                    "name": "subDomain",
+                    "type": "string",
+                    "multiValued": false,
+                    "description": "What is the name of this domain",
+                    "required": false,
+                    "mutability": "readOnly",
+                    "returned": "request"
+                },
+                {
+                    "name": "branding",
+                    "type": "complex",
+                    "multiValued": false,
+                    "description": "The branding for the workspace",
+                    "required": false,
+                    "mutability": "readOnly",
+                    "subAttributes": [{
+                            "name": "dashboardLogoURI",
+                            "type": "reference",
+                            "multiValued": false,
+                            "description": "The URL for the Dashboard Logo",
+                            "required": true,
+                            "mutability": "readOnly",
+                            "returned": "request"
+                        },
+                        {
+                            "name": "workspaceLogoURI",
+                            "type": "reference",
+                            "multiValued": false,
+                            "description": "The URL for the Workspace Logo",
+                            "required": true,
+                            "mutability": "readOnly",
+                            "returned": "request"
+                        },
+                        {
+                            "name": "loginLogoURI",
+                            "type": "reference",
+                            "multiValued": false,
+                            "description": "The URL for the Login Logo",
+                            "required": true,
+                            "mutability": "readOnly",
+                            "returned": "request"
+                        },
+                        {
+                            "name": "themeURI",
+                            "type": "reference",
+                            "multiValued": false,
+                            "description": "The URL for the Theme",
+                            "required": true,
+                            "mutability": "readOnly",
+                            "returned": "request"
+                        },
+                        {
+                            "name": "useCustomLoginLogo",
+                            "type": "boolean",
+                            "multiValued": false,
+                            "description": "Does this branding use a custom login logo",
+                            "required": false,
+                            "mutability": "readOnly",
+                            "returned": "request"
+                        },
+                        {
+                            "name": "branding",
+                            "type": "reference",
+                            "multiValued": false,
+                            "description": "The URL for the Branding",
+                            "required": true,
+                            "mutability": "readWrite",
+                            "returned": "request"
+                        }
+                    ]
+                },
+                {
+                    "name": "ipRestricted",
+                    "type": "boolean",
+                    "multiValued": false,
+                    "description": "Does the Domain support IP restrictions",
+                    "required": true,
+                    "mutability": "readWrite",
+                    "returned": "request"
+                },
+                {
+                    "name": "isReserved",
+                    "type": "boolean",
+                    "multiValued": false,
+                    "description": "Is the Domain Reserved",
+                    "required": true,
+                    "mutability": "readWrite",
+                    "returned": "request"
+                }
+            ]
+        }
+    ]
+}
