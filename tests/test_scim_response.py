@@ -16,16 +16,20 @@ def test_validating_example_user():
     ScimResponse(data=examples.user, core_schema_definitions=_core_schemas.schema, extension_schema_definitions=extension.schema).validate()
 
 
+def test_validating_example_group():
+    from . import examples
+    ScimResponse(data=examples.group, core_schema_definitions=_core_schemas.schema, extension_schema_definitions=extension.schema).validate()
+
+
 def test_validating_invalid_example_user():
-    user_examples = {
+    user_example_without_username_property = {
         "schemas": ["urn:ietf:params:scim:schemas:core2:2.0:User"],
         "id": "2819c223-7f76-453a-919d-413861904646"
     }
-
     assert_error = None
 
     try:
-        ScimResponse(data=user_examples, core_schema_definitions=_core_schemas.schema, extension_schema_definitions=extension.schema).validate()
+        ScimResponse(data=user_example_without_username_property, core_schema_definitions=_core_schemas.schema, extension_schema_definitions=extension.schema).validate()
     except AssertionError as ae:
         assert_error = ae
     assert assert_error is not None
