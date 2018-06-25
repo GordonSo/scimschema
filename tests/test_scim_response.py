@@ -1,8 +1,8 @@
 import pytest
 import json
 import re
-from _scimschema._model.schema_response import ScimResponse
-from _scimschema import _core_schemas
+from scimschema import core_schemas
+from scimschema import ScimResponse
 from . import extension
 # ------------------------------The Following are method tests ------------------------------ #
 
@@ -13,12 +13,12 @@ def _dict_to_json(d):
 
 def test_validating_example_user():
     from . import examples
-    ScimResponse(data=examples.user, core_schema_definitions=_core_schemas.schema, extension_schema_definitions=extension.schema).validate()
+    ScimResponse(data=examples.user, core_schema_definitions=core_schemas.schema, extension_schema_definitions=extension.schema).validate()
 
 
 def test_validating_example_group():
     from . import examples
-    ScimResponse(data=examples.group, core_schema_definitions=_core_schemas.schema, extension_schema_definitions=extension.schema).validate()
+    ScimResponse(data=examples.group, core_schema_definitions=core_schemas.schema, extension_schema_definitions=extension.schema).validate()
 
 
 def test_validating_invalid_example_user():
@@ -29,7 +29,7 @@ def test_validating_invalid_example_user():
     assert_error = None
 
     try:
-        ScimResponse(data=user_example_without_username_property, core_schema_definitions=_core_schemas.schema, extension_schema_definitions=extension.schema).validate()
+        ScimResponse(data=user_example_without_username_property, core_schema_definitions=core_schemas.schema, extension_schema_definitions=extension.schema).validate()
     except AssertionError as ae:
         assert_error = ae
     assert assert_error is not None
@@ -49,7 +49,7 @@ def test_validating_valid_example_account():
     }
     assert_error = None
     try:
-        ScimResponse(data=account_examples, core_schema_definitions=_core_schemas.schema, extension_schema_definitions=extension.schema).validate()
+        ScimResponse(data=account_examples, core_schema_definitions=core_schemas.schema, extension_schema_definitions=extension.schema).validate()
     except AssertionError as ae:
         assert_error = ae
     assert assert_error is not None
@@ -70,7 +70,7 @@ def test_get_invalid_meta_schema():
     # when get schemas is called
     assert_exception = None
     try:
-        ScimResponse(data=example_with_schemas, core_schema_definitions=_core_schemas.schema, extension_schema_definitions=extension.schema)
+        ScimResponse(data=example_with_schemas, core_schema_definitions=core_schemas.schema, extension_schema_definitions=extension.schema)
     except AssertionError as ae:
         assert_exception = ae
 
@@ -83,9 +83,9 @@ def test_get_meta_schema():
         {"schemas": ["urn:ietf:params:scim:schemas:core2:2.0:User"]}
     )
     # when get schemas is called
-    scim_response = ScimResponse(data=example_with_schemas, core_schema_definitions=_core_schemas.schema, extension_schema_definitions=extension.schema)
+    scim_response = ScimResponse(data=example_with_schemas, core_schema_definitions=core_schemas.schema, extension_schema_definitions=extension.schema)
     # then it should return the matching modules
-    expected_schemas = {_core_schemas.schema["urn:ietf:params:scim:schemas:core2:2.0:User"]}
+    expected_schemas = {core_schemas.schema["urn:ietf:params:scim:schemas:core2:2.0:User"]}
     assert set(scim_response._core_meta_schemas) == expected_schemas, \
         "Get schema expected {} but got {}".format([schema["id"] for schema in expected_schemas], [schema["id"] for schema in scim_response])
 
@@ -102,7 +102,7 @@ def test_get_meta_schema_without_definitions(schema_without_definition):
     # when get schemas is called
     exception = None
     try:
-        ScimResponse(schema_without_definition, core_schema_definitions=_core_schemas.schema, extension_schema_definitions=extension.schema).CoreMetaSchemas
+        ScimResponse(schema_without_definition, core_schema_definitions=core_schemas.schema, extension_schema_definitions=extension.schema).CoreMetaSchemas
     except AssertionError as ke:
         exception = ke
 

@@ -1,6 +1,6 @@
 import setuptools
 
-with open("README.rstrst", "r") as fh:
+with open("README.rst", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
@@ -12,10 +12,14 @@ setuptools.setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/GordonSo/pyscim",
-    packages=setuptools.find_packages(),
     classifiers=(
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ),
+    package_dir={"": "src"},
+    packages={
+        "_scimschema"
+    },
+    py_modules=["scimschema"]
 )

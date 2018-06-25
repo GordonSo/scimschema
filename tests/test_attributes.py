@@ -1,8 +1,6 @@
 import re
 import pytest
-from _scimschema._model.attribute import AttributeFactory
-from _scimschema._model.attribute import MultiValuedAttribute
-
+from scimschema import model, attribute
 
 def test_default_meta_attribute():
     d = {
@@ -16,7 +14,7 @@ def test_default_meta_attribute():
         "caseExact": False,
         "mutability": "invalid"
     }
-    maf = AttributeFactory.create(d=d, locator_path="urn:ietf:params:scim:schemas:test:default_attribute")
+    maf = model.AttributeFactory.create(d=d, locator_path="urn:ietf:params:scim:schemas:test:default_attribute")
     expected_exception = None
     try:
         maf.validate_schema()
@@ -48,7 +46,7 @@ def test_binary_attribute_validate():
         "data": "kjj"
     }
 
-    maf = AttributeFactory.create(d=schema, locator_path="urn:ietf:params:scim:schemas:test:binary_attribute")
+    maf = model.AttributeFactory.create(d=schema, locator_path="urn:ietf:params:scim:schemas:test:binary_attribute")
     maf.validate_schema()
     maf.validate(data)
 
@@ -132,7 +130,7 @@ def test_complex_meta_attribute():
         "returned": "default",
         "uniqueness": "none"
     }
-    maf = AttributeFactory.create(d=d, locator_path="urn:ietf:params:scim:schemas:test:complex_attribute")
+    maf = model.AttributeFactory.create(d=d, locator_path="urn:ietf:params:scim:schemas:test:complex_attribute")
     maf.validate_schema()
 
 
@@ -142,7 +140,7 @@ def test_int_meta_attribute():
         "type": "integer",
         "required": True
     }
-    maf = AttributeFactory.create(d=schema, locator_path="urn:ietf:params:scim:schemas:test:integer_attribute")
+    maf = model.AttributeFactory.create(d=schema, locator_path="urn:ietf:params:scim:schemas:test:integer_attribute")
     maf.validate_schema()
 
     data = {
@@ -164,7 +162,7 @@ def test_reference_meta_attribute():
         "returned": "default",
         "uniqueness": "none"
     }
-    maf = AttributeFactory.create(
+    maf = model.AttributeFactory.create(
         d=d, locator_path="urn:ietf:params:scim:schemas:test:ref_attribute", is_parent_multi_valued=True)
     maf.validate_schema()
 
@@ -175,7 +173,7 @@ def test_string_meta_attribute():
         "type": "string",
         "required": True
     }
-    maf = AttributeFactory.create(d=schema, locator_path="urn:ietf:params:scim:schemas:test:string_attribute")
+    maf = model.AttributeFactory.create(d=schema, locator_path="urn:ietf:params:scim:schemas:test:string_attribute")
     maf.validate_schema()
 
     data = {
@@ -198,7 +196,7 @@ def test_invalid_string_meta_attribute():
         "returned": "default",
         "uniqueness": "server"
     }
-    maf = AttributeFactory.create(d=schema, locator_path="urn:ietf:params:scim:schemas:test:string_attribute")
+    maf = model.AttributeFactory.create(d=schema, locator_path="urn:ietf:params:scim:schemas:test:string_attribute")
     maf.validate_schema()
 
     data = {
@@ -221,7 +219,7 @@ def test_multi_valued_string_meta_attribute():
         "multiValued": True,
         "required": True
     }
-    maf = AttributeFactory.create(d=schema, locator_path="urn:ietf:params:scim:schemas:test:multi_string_attribute")
+    maf = model.AttributeFactory.create(d=schema, locator_path="urn:ietf:params:scim:schemas:test:multi_string_attribute")
     maf.validate_schema()
 
     data = {
@@ -307,7 +305,7 @@ def test_multi_valued_complex_meta_attribute():
             },
         ]
     }
-    maf = AttributeFactory.create(
+    maf = model.AttributeFactory.create(
         d=schema, locator_path="urn:ietf:params:scim:schemas:test:multi_complex_attribute")
     maf.validate_schema()
     maf.validate(response)
@@ -388,10 +386,10 @@ def test_multi_valued_invalid_complex_meta_attribute():
             }
         ]
     }
-    maf = AttributeFactory.create(
+    maf = model.AttributeFactory.create(
         d=schema, locator_path="urn:ietf:params:scim:schemas:test:multi_complex_attribute")
 
-    assert isinstance(maf, MultiValuedAttribute)
+    assert isinstance(maf, attribute.MultiValuedAttribute)
     maf.validate_schema()
     exception = None
     try:
@@ -412,7 +410,7 @@ def test_multi_valued_invalid_string_meta_attribute():
         "multiValued": True,
         "required": True
     }
-    maf = AttributeFactory.create(d=schema, locator_path="urn:ietf:params:scim:schemas:test:multi_string_attribute")
+    maf = model.AttributeFactory.create(d=schema, locator_path="urn:ietf:params:scim:schemas:test:multi_string_attribute")
     maf.validate_schema()
 
     data = {
@@ -454,7 +452,7 @@ def test_meta_attribute(key, value):
     example_data = {
         "timezone": "25-05-2018 11:28:00.000Z"
     }
-    meta_attribute = AttributeFactory.create(d=example_schema_attribute_dict, locator_path="root")
+    meta_attribute = model.AttributeFactory.create(d=example_schema_attribute_dict, locator_path="root")
     assert meta_attribute.name == "timezone"
     assert meta_attribute.type == "string"
     # assert meta_attribute.multi_valued == False

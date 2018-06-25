@@ -14,7 +14,7 @@ def load_json_dict(path):
         The Key is the name of the json file (without extension)
         The Value is the json object
         E.g.
-        from _core_schemas import core2
+        from core_schemas import core2
         user_schema = core2.schema["user"]
     """
     def load(_path):

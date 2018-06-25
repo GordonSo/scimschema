@@ -1,15 +1,15 @@
 import re
-from _scimschema._model.model import Model
-
+from scimschema import model
 
 # </editor-fold># <editor-fold desc="test meta schema">
+
 
 def test_meta_schema_name():
     mock_schema = {
         "id": "urn:ietf:params:scim:schemas:core2:2.0:User",
         "name": "User"
     }
-    Model(mock_schema)._validate_schema_name()
+    model.Model(mock_schema)._validate_schema_name()
 
 
 def test_meta_schema_invalid_name():
@@ -20,7 +20,7 @@ def test_meta_schema_invalid_name():
     }
     assert_error = None
     try:
-        Model(mock_schema)
+        model.Model(mock_schema)
     except AssertionError as ae:
         assert_error = ae
 
@@ -64,7 +64,7 @@ def test_meta_schema_invalid_sub_attributes():
     }
     assert_error = None
     try:
-        Model(mock_schema)
+        model.Model(mock_schema)
     except AssertionError as ae:
         assert_error = ae
 
@@ -80,7 +80,7 @@ def test_meta_schema_invalid_description():
     }
     assert_error = None
     try:
-        Model(mock_schema)
+        model.Model(mock_schema)
     except AssertionError as ae:
         assert_error = ae
     assert assert_error is not None

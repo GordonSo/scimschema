@@ -1,7 +1,7 @@
 import collections
 import re
-from . import scim_exceptions
 from datetime import datetime
+from . import scim_exceptions
 
 
 class AttributeFactory:
