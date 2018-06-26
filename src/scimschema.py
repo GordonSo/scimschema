@@ -10,7 +10,8 @@ __all__ = [
     "load_dict_to_schema",
     "scim_exceptions",
     "model",
-    "attribute"
+    "attribute",
+    "ScimResponse"
 ]
 
 

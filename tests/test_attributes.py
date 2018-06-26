@@ -2,6 +2,7 @@ import re
 import pytest
 from scimschema import model, attribute
 
+
 def test_default_meta_attribute():
     d = {
         "name": "_userName",
