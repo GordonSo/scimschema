@@ -1,6 +1,7 @@
-.. image:: https://github.com/GordonSo/scimschema/blob/master/scimschema.svg
+.. image:: https://raw.githubusercontent.com/GordonSo/scimschema/master/scimschema.svg
+   :target: https://github.com/GordonSo/scimschema
    :align: center
-   :alt: pytest
+   :alt: scimschema-logo
 
 ------
 
@@ -14,10 +15,7 @@ Validate JSon content given a predefined set of SCIM Schemas (in JSON representa
 Example use case
 ----------------
 
-Check out this `test_scim_schema.py`_.
-
-.. _test_scim_schema.py: /tests/test_scim_schema.py.rst
-
+Check out this `test_scim_schema.py <_test_scim_schema.py: https://github.com/GordonSo/scimschema/blob/master/tests/test_scim_schema.py>`_.
 
 .. code-block:: python
 
@@ -63,7 +61,8 @@ Support for `SCIM 2.0 <http://www.simplecloud.info/#Specification>`_,
 
 Upcoming features
 -----------------
- - Validate JSON Content for characteristics below:
+
+  - Validate JSON Content for characteristics below:
      - Mutability, Returned
 
 
