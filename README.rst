@@ -1,15 +1,15 @@
-.. figure:: https://github.com/GordonSo/scimschema/blob/master/scimschema.svg
-   :width: 100%
+.. image:: https://github.com/GordonSo/scimschema/blob/master/scimschema.svg
+   :align: center
+   :alt: pytest
+
+------
 
 ScimSchema
 ==========
 .. image:: https://travis-ci.org/GordonSo/scimschema.svg?branch=master
     :target: https://travis-ci.org/GordonSo/scimschema
 
-Validate JSon content given a predefined set of SCIM Schemas (in JSON representation format) as specified in `SCIM`_ (supporting Python 3+).
-
-.. _`SCIM`: http://www.simplecloud.info/
-
+Validate JSon content given a predefined set of SCIM Schemas (in JSON representation format) as specified in `SCIM <http://www.simplecloud.info/>`_ (supporting Python 3+).
 
 Example use case
 ----------------
@@ -71,29 +71,15 @@ Upcoming features
 Running the Test Suite
 ----------------------
 
-The project require `pytest` to discover tests, and it integrates with travis_ to run on commit.
-If you use a Windows machine, there are commands in the go.bat_ to start you started building a local venv etc...
-
-.. _go.bat: /go.bat
-
-.. _travis: .travis.yml
+The project require `pytest` to discover tests, and it integrates with `travis <https://github.com/GordonSo/scimschema/blob/master/.travis.yml>`_ to run on commit.
+If you use a Windows machine, there are commands in the `go.bat <https://github.com/GordonSo/scimschema/blob/master/go.bat>`_ to start you started building a local venv etc...
 
 
 Contributing
 ------------
 
-This project is powered by the QA department at Huddle_
-
-.. _Huddle: https://twitter.com/HuddleEng
-
+This project is powered by the QA department at `Huddle <https://twitter.com/HuddleEng>`_
 
 The source code is available on `GitHub <https://github.com/GordonSo/scimschema>`_.
 
-.. raw:: html
-    <embed>
-        <a href="https://twitter.com/TwitterDev?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-show-count="false">Follow
- @TwitterDev</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-    </embed>
-
-
-Get in touch, via GitHub or otherwise, if contributors are most welcome!
+Get in touch, via GitHub or otherwise, contributors are also welcome!

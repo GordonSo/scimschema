@@ -5,12 +5,12 @@ with open("README.rst", "r") as fh:
 
 setuptools.setup(
     name="scimschema",
-    version="0.0.1",
+    version="0.0.6",
     author="Gordon So",
     author_email="gordonkwso@gmail.com",
     description="A validator for System for Cross-domain Identity Management (SCIM) responses given predefine schemas",
     long_description=long_description,
-    long_description_content_type="text/markdown",
+    long_description_content_type="text/x-rst",
     url="https://github.com/GordonSo/pyscim",
     classifiers=(
         "Programming Language :: Python :: 3",
@@ -18,8 +18,6 @@ setuptools.setup(
         "Operating System :: OS Independent",
     ),
     package_dir={"": "src"},
-    packages={
-        "_scimschema"
-    },
+    packages={"_scimschema"},
     py_modules=["scimschema"]
 )
