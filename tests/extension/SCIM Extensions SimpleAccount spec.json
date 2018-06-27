@@ -1,0 +1,32 @@
+{
+    "id": "urn:huddle:params:scim:schemas:extension:2.0:SimpleAccount",
+    "name": "HuddleAccount",
+    "description": "An Account is a subset of Workspaces within a Company",
+    "attributes": [{
+            "name": "status",
+            "type": "string",
+            "multiValued": false,
+            "description": "The status of the workspace",
+            "required": false,
+            "canonicalValues": [
+                "active",
+                "suspended",
+                "deleted",
+                "subscribing",
+                "paymentFailed",
+                "suspendedForMaintenance"
+            ],
+            "mutability": "readWrite",
+            "returned": "default"
+        },
+        {
+            "name": "ipRestrictionsEnabled",
+            "type": "boolean",
+            "multiValued": false,
+            "description": "Do apply any IP Restrictions to the account?",
+            "required": true,
+            "mutability": "readWrite",
+            "returned": "request"
+        }
+    ]
+}

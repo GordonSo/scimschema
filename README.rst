@@ -1,65 +1,99 @@
-==========
-scimschema
-System for Cross-domain Identity Management
+.. figure:: https://github.com/GordonSo/scimschema/blob/master/scimschema.svg
+   :width: 100%
 
+ScimSchema
 ==========
+.. image:: https://travis-ci.org/GordonSo/scimschema.svg?branch=master
+    :target: https://travis-ci.org/GordonSo/scimschema
 
-``scimschema`` is an implementation of `SCIM Schema <http://www.simplecloud.info/>` for Python (supporting Python 3+).
+Validate JSon content given a predefined set of SCIM Schemas (in JSON representation format) as specified in `SCIM`_ (supporting Python 3+).
+
+.. _`SCIM`: http://www.simplecloud.info/
+
+
+Example use case
+----------------
+
+Check out this `test_scim_schema.py`_.
+
+.. _test_scim_schema.py: /tests/test_scim_schema.py.rst
+
 
 .. code-block:: python
 
-    >>> from scimschema import validate
+    from scimschema import validate
+    from . import extension
 
-    >>> # A sample schema, like what we'd get from json.load()
-    >>> schema = {
-    ...    "schemas": ["urn:ietf:params:scim:schemas:core2:2.0:User"],
-    ...    "id": "2819c223-7f76-453a-919d-413861904646",
-    ...    "externalId": 9,
-    ...    "meta": {
-    ...        "resourceType": "User",
-    ...        "created": "2011-08-01T18:29:49.793Z",
-    ...        "lastModified": "Invalid date",
-    ...        "location": "https://example.com/v2/Users/2819c223...",
-    ...        "version": "W\/\"f250dd84f0671c3\""
-    ...    }
-    ...}
+    # A sample schema, like what we'd get from response.get(<scim entity url>).json()
+    content = {
+        "schemas": ["urn:ietf:params:scim:schemas:core2:2.0:User", "urn:ietf:params:scim:schemas:extension:2.0:User"],
+        "id": "2819c223-7f76-453a-919d-413861904646",
+        "externalId": 9,
+        "meta": {
+            "resourceType": "User",
+            "created": "2011-08-01T18:29:49.793Z",
+            "lastModified": "Invalid date",
+            "location": "https://example.com/v2/Users/2819c223...",
+            "version": "W\/\"f250dd84f0671c3\""
+        }
+    }
+    validate(
+        data=content,
+        extension_schema_definitions=extension.schema
+    )
 
-    >>> # If no exception is raised by validate(), the instance is valid.
-    >>> validate({"name" : "Eggs", "price" : 34.99}, schema)
+    >>>    E   _scimschema._model.scim_exceptions.AggregatedScimMultValueAttributeValidationExceptions: Found 1 aggregated exceptions at Scim response:
+    >>>    E    ScimAttributeValueNotFoundException:
+    >>>    E    	 'Single-value attribute:ipRestrictionsEnabled' is required at the following location '['urn:huddle:params:scim:schemas:extension:2.0:Account', 'ipRestrictionsEnabled']' but found '{}'
+    >>>    !!!!!!!!!!!!!!!!!!! Interrupted: 1 errors during collection !!!!!!!!!!!!!!!!!!!
 
-    >>> validate(
-    ...     {"name" : "Eggs", "price" : "Invalid"}, schema
-    ... )                                   # doctest: +IGNORE_EXCEPTION_DETAIL
-    Traceback (most recent call last):
-        ...
-    AssertError: 'Invalid' is not of type 'number'
 
 Features
 --------
 
-* Full support for
-  `SCIM 2.0 <http://www.simplecloud.info/#Specification>`_,
+Support for `SCIM 2.0 <http://www.simplecloud.info/#Specification>`_,
+  - Validate SCIM Schema definition
+     - Validate Model (schema) Id, Name, description, attributes
+     - Validate Attribute (schema) Name, Type, Required, Canonical Values, Mutability, Returned, Uniqueness
+
+  - Validate JSON Content against SCIM Schema
+     - Validate significant value against Type (Binary, Boolean, Datetime, Decimal, Integer, Reference, String, Complex, MultiValued)
+     - Characteristics Required, Canonical Values, Uniqueness
+
+
+Upcoming features
+-----------------
+ - Validate JSON Content for characteristics below:
+     - Mutability, Returned
+
 
 
 Running the Test Suite
 ----------------------
 
-If you have ``tox`` installed (perhaps via ``pip install tox`` or your
-package manager), running ``tox`` in the directory of your source checkout will
-run ``jsonschema``'s test suite on all of the versions of Python ``jsonschema``
-supports. Note that you'll need to have all of those versions installed in
-order to run the tests on each of them, otherwise ``tox`` will skip (and fail)
-the tests on that version.
+The project require `pytest` to discover tests, and it integrates with travis_ to run on commit.
+If you use a Windows machine, there are commands in the go.bat_ to start you started building a local venv etc...
 
-Of course you're also free to just run the tests on a single version with your
-favorite test runner. The tests live in the ``jsonschema.tests`` package.
+.. _go.bat: /go.bat
+
+.. _travis: .travis.yml
 
 
 Contributing
 ------------
 
-I'm Gordon So.
+This project is powered by the QA department at Huddle_
 
-``scimschema`` is on `GitHub <https://github.com/GordonSo/scimschema>`_.
+.. _Huddle: https://twitter.com/HuddleEng
+
+
+The source code is available on `GitHub <https://github.com/GordonSo/scimschema>`_.
+
+.. raw:: html
+    <embed>
+        <a href="https://twitter.com/TwitterDev?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-show-count="false">Follow
+ @TwitterDev</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    </embed>
+
 
 Get in touch, via GitHub or otherwise, if contributors are most welcome!

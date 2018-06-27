@@ -34,10 +34,7 @@ class ScimResponse(dict):
         data = self.copy()
         exceptions = []
         for extension_schema_model in self._extension_schema_definitions:
-            try:
-                tmp_data = data.pop(extension_schema_model.id)
-            except KeyError:
-                continue
+            tmp_data = data.pop(extension_schema_model.id, {})
             try:
                 extension_schema_model.validate(tmp_data)
             except AssertionError as ae:

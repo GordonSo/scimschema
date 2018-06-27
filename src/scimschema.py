@@ -20,7 +20,7 @@ def validate(data, extension_schema_definitions):
         data=data,
         core_schema_definitions=core_schemas.schema,
         extension_schema_definitions=extension_schema_definitions
-    )
+    ).validate()
 
 
 def load_dict_to_schema(path):
