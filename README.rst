@@ -24,7 +24,7 @@ Check out this `test_scim_schema.py <_test_scim_schema.py: https://github.com/Go
 
     # A sample schema, like what we'd get from response.get(<scim entity url>).json()
     content = {
-        "schemas": ["urn:ietf:params:scim:schemas:core2:2.0:User", "urn:ietf:params:scim:schemas:extension:2.0:User"],
+        "schemas": ["urn:ietf:params:scim:schemas:core2:2.0:Group", "urn:huddle:params:scim:schemas:extension:2.0:SimpleAccount"],
         "id": "2819c223-7f76-453a-919d-413861904646",
         "externalId": 9,
         "meta": {
@@ -70,8 +70,8 @@ Upcoming features
 Running the Test Suite
 ----------------------
 
-The project require `pytest` to discover tests, and it integrates with `travis <https://github.com/GordonSo/scimschema/blob/master/.travis.yml>`_ to run on commit.
-If you use a Windows machine, there are commands in the `go.bat <https://github.com/GordonSo/scimschema/blob/master/go.bat>`_ to start you started building a local venv etc...
+The project requires `pytest` to discover tests, and it integrates with `travis <https://github.com/GordonSo/scimschema/blob/master/.travis.yml>`_ to run on commit.
+If you use a Windows machine, there are helpful commands in the `go.bat <https://github.com/GordonSo/scimschema/blob/master/go.bat>`_ to get you started...
 
 
 Contributing
