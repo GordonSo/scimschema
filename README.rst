@@ -1,4 +1,4 @@
-.. image:: https://raw.githubusercontent.com/GordonSo/scimschema/master/scimschema.svg
+.. image:: https://raw.githubusercontent.com/GordonSo/scimschema/master/scimschema-logo.png
    :target: https://github.com/GordonSo/scimschema
    :align: center
    :alt: scimschema-logo
