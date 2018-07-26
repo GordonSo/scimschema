@@ -1,7 +1,7 @@
-from _scimschema.core_schemas import load_dict as _load_dict
-from _scimschema import core_schemas
-from _scimschema._model.schema_response import ScimResponse
-from _scimschema._model import scim_exceptions, model, attribute
+from ._scimschema.core_schemas import load_dict as _load_dict
+from ._scimschema import core_schemas
+from ._scimschema._model.schema_response import ScimResponse
+from ._scimschema._model import scim_exceptions, model, attribute
 
 
 __all__ = [
