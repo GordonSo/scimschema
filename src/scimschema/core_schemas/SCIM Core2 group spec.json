@@ -1,5 +1,5 @@
 {
-    "id": "urn:ietf:params:scim:schemas:core2:2.0:Group",
+    "id": "urn:ietf:params:scim:schemas:core:2.0:Group",
     "name": "Group",
     "description": "Group",
     "attributes": [

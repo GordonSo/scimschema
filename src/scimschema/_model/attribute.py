@@ -249,7 +249,7 @@ class BooleanAttribute(Attribute):
     _accepted_uniqueness_value = {"none"}
 
     def _validate(self, value):
-        if not (value and isinstance(value, bool)):
+        if not isinstance(value, bool):
             raise scim_exceptions.ScimAttributeInvalidTypeException(
                 expected=self._d,
                 locator=self._locator_path,

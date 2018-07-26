@@ -2,7 +2,7 @@ import os
 import glob
 import json
 from pathlib import Path
-from _scimschema._model.model import Model
+from .._model.model import Model
 import logging
 scim_logger = logging.getLogger("pyscim")
 

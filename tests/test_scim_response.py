@@ -23,7 +23,7 @@ def test_validating_example_group():
 
 def test_validating_invalid_example_user():
     user_example_without_username_property = {
-        "schemas": ["urn:ietf:params:scim:schemas:core2:2.0:User"],
+        "schemas": ["urn:ietf:params:scim:schemas:core:2.0:User"],
         "id": "2819c223-7f76-453a-919d-413861904646"
     }
     assert_error = None
@@ -34,14 +34,14 @@ def test_validating_invalid_example_user():
         assert_error = ae
     assert assert_error is not None
     pattern_invalid_str = re.compile(
-        "'Single-value attribute:userName' is required at the following location '\['urn:ietf:params:scim:schemas:core2:2.0:User', 'userName'\]' but found '{'"
+        "'Single-value attribute:userName' is required at the following location '\['urn:ietf:params:scim:schemas:core:2.0:User', 'userName'\]' but found '{'"
     )
     assert re.search(pattern_invalid_str, str(assert_error))
 
 
 def test_validating_valid_example_account():
     account_examples = {
-        "schemas": ["urn:ietf:params:scim:schemas:core2:2.0:Group", "urn:huddle:params:scim:schemas:extension:2.0:Account"],
+        "schemas": ["urn:ietf:params:scim:schemas:core:2.0:Group", "urn:huddle:params:scim:schemas:extension:2.0:Account"],
         "id": "2819c223-7f76-453a-919d-413861904646",
         "urn:huddle:params:scim:schemas:extension:2.0:Account": {
             "package": {}
@@ -64,7 +64,7 @@ def test_get_invalid_meta_schema():
 
     # given a response with a validate schemas attribute - both user and group (for the sack of testing)
     example_with_schemas = _dict_to_json(
-        {"schemas": ["urn:ietf:params:scim:schemas:core2:2.0:User", "urn:ietf:params:scim:schemas:core2:2.0:Group"]}
+        {"schemas": ["urn:ietf:params:scim:schemas:core:2.0:User", "urn:ietf:params:scim:schemas:core:2.0:Group"]}
     )
 
     # when get schemas is called
@@ -80,12 +80,12 @@ def test_get_invalid_meta_schema():
 def test_get_meta_schema():
     # given a response with a validate schemas attribute - both user and group (for the sack of testing)
     example_with_schemas = _dict_to_json(
-        {"schemas": ["urn:ietf:params:scim:schemas:core2:2.0:User"]}
+        {"schemas": ["urn:ietf:params:scim:schemas:core:2.0:User"]}
     )
     # when get schemas is called
     scim_response = ScimResponse(data=example_with_schemas, core_schema_definitions=core_schemas.schema, extension_schema_definitions=extension.schema)
     # then it should return the matching modules
-    expected_schemas = {core_schemas.schema["urn:ietf:params:scim:schemas:core2:2.0:User"]}
+    expected_schemas = {core_schemas.schema["urn:ietf:params:scim:schemas:core:2.0:User"]}
     assert set(scim_response._core_meta_schemas) == expected_schemas, \
         "Get schema expected {} but got {}".format([schema["id"] for schema in expected_schemas], [schema["id"] for schema in scim_response])
 
