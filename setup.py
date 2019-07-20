@@ -18,6 +18,6 @@ setuptools.setup(
         "Operating System :: OS Independent",
     ),
     package_dir={"": "src"},
-    packages={"scimschema"},
-    py_modules=["scimschema"]
+    packages=setuptools.find_packages("scimschema"),
+    include_package_data=True,
 )
