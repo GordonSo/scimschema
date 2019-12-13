@@ -21,6 +21,11 @@ def test_validating_example_group():
     ScimResponse(data=examples.group, core_schema_definitions=core_schemas.schema, extension_schema_definitions=extension.schema).validate()
 
 
+def test_validating_example_custom_user():
+    from . import examples
+    ScimResponse(data=examples.customUser, core_schema_definitions=core_schemas.schema, extension_schema_definitions=extension.schema).validate()
+
+
 def test_validating_invalid_example_user():
     user_example_without_username_property = {
         "schemas": ["urn:ietf:params:scim:schemas:core:2.0:User"],

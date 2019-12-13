@@ -1,0 +1,16 @@
+{
+    "id": "urn:scim:my:custom:schema",
+    "name": "customUser",
+    "description": "custom user for testing",
+    "attributes": [
+        {
+            "name": "customName",
+            "type": "string",
+            "multiValued": false,
+            "description": "Customised nickname",
+            "required": true,
+            "mutability": "readWrite",
+            "returned": "request"
+        }
+    ]
+}

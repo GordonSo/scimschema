@@ -21,12 +21,13 @@ class ScimResponse(dict):
         if schema_names is None or len(schema_names) == 0:
             raise AssertionError("Response has no specified schema")
 
+        core_schema_names = list(core_schema_definitions.keys())
         core_meta_schemas = [
-            core_schema_definitions[schema_name] for schema_name in schema_names if "extension" not in schema_name
+            core_schema_definitions[schema_name] for schema_name in schema_names if schema_name in core_schema_names
         ]
 
         extension_meta_schemas = [
-            extension_schema_definitions[schema_name] for schema_name in schema_names if "extension" in schema_name
+            extension_schema_definitions[schema_name] for schema_name in schema_names if schema_name not in core_schema_names
         ]
         return core_meta_schemas, extension_meta_schemas
 
