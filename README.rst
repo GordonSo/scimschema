@@ -15,7 +15,7 @@ Validate JSon content given a predefined set of SCIM Schemas (in JSON representa
 Example use case
 ----------------
 
-Install the library via pip:
+1) Install the library via pip:
 
 .. code-block:: python
 
@@ -23,13 +23,13 @@ Install the library via pip:
     pip install scimschema
 
 
-Specify any custom schemas in json format as per the rfc requirement: https://tools.ietf.org/html/rfc7643#section-2
+2) Specify any custom schemas in json format as per the rfc requirement: https://tools.ietf.org/html/rfc7643#section-2
 
-Put the json files under a Python package as per our examples here: https://github.com/GordonSo/scimschema/tree/master/tests/extension
+3) Put the json files under a Python package as per our examples here: https://github.com/GordonSo/scimschema/tree/master/tests/extension (also checkout our __init__() file which is handy for loading the json)
 
-Import the validate method and pass in your data and the extension schemas to assert on the Json's validness.
+4) Import the ```validate``` method from scimschema and pass in json response/request content and the extension schemas to assert its validness
 
-Check out this `test_scim_schema.py <_test_scim_schema.py: https://github.com/GordonSo/scimschema/blob/master/tests/test_scim_schema.py>`_.
+To step through the above in working code, check out this test: `test_scim_schema.py <_test_scim_schema.py: https://github.com/GordonSo/scimschema/blob/master/tests/test_scim_schema.py>`_.
 
 .. code-block:: python
 
