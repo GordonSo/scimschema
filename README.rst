@@ -29,7 +29,7 @@ Example use case
 
 4) Import the ```validate``` method from scimschema and pass in json response/request content and the extension schemas to assert its validness
 
-To step through the above in working code, check out this test: `test_scim_schema.py <_test_scim_schema.py: https://github.com/GordonSo/scimschema/blob/master/tests/test_scim_schema.py>`_.
+To step through the above in working code, check out this test: `test_scim_schema.py <https://github.com/GordonSo/scimschema/blob/master/tests/test_scim_schema.py>`_.
 
 .. code-block:: python
 
