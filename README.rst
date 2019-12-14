@@ -34,7 +34,7 @@ To step through the above in working code, check out this test: `test_scim_schem
 .. code-block:: python
 
     from scimschema import validate
-    from . import extension
+    from . import extension # <- this is the custom schemas define by your: see https://github.com/GordonSo/scimschema/tree/master/tests/extension for example
 
     # A sample schema, like what we'd get from response.get(<scim entity url>).json()
     content = {
