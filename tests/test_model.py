@@ -1,5 +1,5 @@
 import re
-from scimschema import model
+from scimschema._model import model
 
 # </editor-fold># <editor-fold desc="test meta schema">
 

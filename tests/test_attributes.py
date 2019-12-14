@@ -1,6 +1,7 @@
 import re
 import pytest
-from scimschema import model, attribute
+from scimschema._model import model
+from scimschema._model import attribute
 
 
 def test_default_meta_attribute():

@@ -1,7 +1,7 @@
-from .core_schemas import load_dict as _load_dict
-from . import core_schemas
-from ._model.schema_response import ScimResponse
-from ._model import scim_exceptions, model, attribute
+from scimschema.core_schemas import load_dict as _load_dict
+from scimschema import core_schemas
+from scimschema._model.schema_response import ScimResponse
+from scimschema._model import attribute
 
 
 def validate(data, extension_schema_definitions):

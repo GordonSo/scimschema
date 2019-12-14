@@ -2,7 +2,7 @@ import pytest
 import json
 import re
 from scimschema import core_schemas
-from scimschema import ScimResponse
+from scimschema._model.schema_response import ScimResponse
 from . import extension
 # ------------------------------The Following are method tests ------------------------------ #
 
