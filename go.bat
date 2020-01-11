@@ -1,4 +1,4 @@
-python -m venv env
+python3 -m venv env
 call .\env\Scripts\activate.bat
 pip3 install -r requirements.txt --disable-pip-version-check
 pushd src
