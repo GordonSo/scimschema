@@ -169,6 +169,81 @@ def test_reference_meta_attribute():
     maf.validate_schema()
 
 
+def test_datetime_meta_attribute():
+    schema = {
+        "name": "birthday",
+        "type": "datetime",
+        "required": True
+    }
+    maf = model.AttributeFactory.create(d=schema, locator_path="urn:ietf:params:scim:schemas:test:datetime_attribute")
+    maf.validate_schema()
+
+    data = {
+        "birthday": "2008-01-23T04:56:22Z"
+    }
+    maf.validate(data)
+
+
+def test_invalid_datetime_meta_attribute():
+    schema = {
+        "name": "created",
+        "type": "datetime",
+        "description": "The 'DateTime' that the resource was added to the service provider.  This attribute MUST be a DateTime.",
+        "required": False,
+    }
+    maf = model.AttributeFactory.create(d=schema, locator_path="urn:ietf:params:scim:schemas:test:datetime_attribute")
+    maf.validate_schema()
+
+    data = {
+        "created": "xyz1-01-23T04:56:22"
+    }
+    assert_exceptions = None
+    try:
+        maf.validate(data)
+    except AssertionError as ae:
+        assert_exceptions = ae
+
+    pattern = re.compile('\'Single-value attribute: \'xyz1-01-23T04:56:22\' \(at path.*\) is expected to be \'datetime with format 2008-01-23T04:56:22Z\'')
+    assert re.search(pattern=pattern, string=str(assert_exceptions)) is not None
+
+
+def test_decimal_meta_attribute():
+    schema = {
+        "name": "open_price",
+        "type": "decimal",
+        "required": True
+    }
+    maf = model.AttributeFactory.create(d=schema, locator_path="urn:ietf:params:scim:schemas:test:decimal_attribute")
+    maf.validate_schema()
+
+    data = {
+        "open_price": 0.1
+    }
+    maf.validate(data)
+
+
+def test_invalid_decimal_meta_attribute():
+    schema = {
+        "name": "open_price",
+        "type": "decimal",
+        "required": True
+    }
+    maf = model.AttributeFactory.create(d=schema, locator_path="urn:ietf:params:scim:schemas:test:decimal_attribute")
+    maf.validate_schema()
+
+    data = {
+        "open_price": ".1"
+    }
+    assert_exceptions = None
+    try:
+        maf.validate(data)
+    except AssertionError as ae:
+        assert_exceptions = ae
+
+    pattern = re.compile('\'Single-value attribute: \'.1\' \(at path:.*\) is expected to be \'must be a real number with at least one digit to the left and right of the period\'')
+    assert re.search(pattern=pattern, string=str(assert_exceptions)) is not None
+
+
 def test_string_meta_attribute():
     schema = {
         "name": "userName",

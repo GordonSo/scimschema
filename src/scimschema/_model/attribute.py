@@ -21,6 +21,8 @@ class AttributeFactory:
         attribute_factory = {
             "binary": BinaryAttribute,
             "boolean": BooleanAttribute,
+            "datetime": DatetimeAttribute,
+            "decimal": DecimalAttribute,
             "complex": ComplexAttribute,
             "integer": IntegerAttribute,
             "reference": ReferenceAttribute,
@@ -267,15 +269,17 @@ class DatetimeAttribute(Attribute):
     _accepted_uniqueness_value = {"none"}
 
     def _validate(self, value):
-        if not (value and datetime.strptime(value, "%Y %m %dT%H:%M:%S %Z")):
+        try:
+            datetime.strptime(value, "%Y-%m-%dT%H:%M:%SZ")
+        except ValueError:
             raise scim_exceptions.ScimAttributeInvalidTypeException(
                 expected=self._d,
                 locator=self._locator_path,
                 value=value,
                 multi_value=self.multiValued,
-                attribute_type="datetime with format 2008-01-23T04:56:22Z"
+                attribute_type="datetime with format 2008-01-23T04:56:22Z",
+                reference=self._link_reference
             )
-            # raise ValueError("{}-{} value: {} must be type boolean".format(self.id, self._locator_path, value))
 
 
 class DecimalAttribute(Attribute):
@@ -288,7 +292,7 @@ class DecimalAttribute(Attribute):
         if not (
                 value and
                 isinstance(value, float) and
-                not pos_period >= 1 and len(value) - pos_period >= 1
+                pos_period >= 1 and len(str(value)) - pos_period >= 1
         ):
             type_description = "must be a real number with at least one digit to the left and right of the period"
             raise scim_exceptions.ScimAttributeInvalidTypeException(
@@ -296,12 +300,9 @@ class DecimalAttribute(Attribute):
                 locator=self._locator_path,
                 value=value,
                 multi_value=self.multiValued,
-                attribute_type=type_description
+                attribute_type=type_description,
+                reference=self._link_reference,
             )
-            # raise ValueError(
-            #     "{}-{} value: {} must be a real number with at least one digit to the left and right of the period"
-            #     .format(self.id, self._locator_path, value)
-            # )
 
 
 class IntegerAttribute(Attribute):
