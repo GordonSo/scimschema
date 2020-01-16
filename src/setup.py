@@ -1,11 +1,11 @@
 import setuptools
 
-with open("../README.rst", "r") as fh:
+with open("./README.rst", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
     name="scimschema",
-    version="0.1.46",
+    version="0.1.52",
     author="Gordon So",
     author_email="gordonkwso@gmail.com",
     description="A validator for System for Cross-domain Identity Management (SCIM) responses given predefine schemas",
