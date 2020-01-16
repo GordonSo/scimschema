@@ -311,7 +311,7 @@ class IntegerAttribute(Attribute):
     _accepted_case_exact_value = {True, False}
 
     def _validate(self, value):
-        if not (value and not isinstance(value, bool) and isinstance(value, int)):
+        if not (not isinstance(value, bool) and isinstance(value, int)):
             raise scim_exceptions.ScimAttributeInvalidTypeException(
                 expected=self._d,
                 locator=self._locator_path,
