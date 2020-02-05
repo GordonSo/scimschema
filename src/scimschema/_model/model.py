@@ -80,7 +80,7 @@ class Model(object):
             # OPTIONAL for scim schema - mandatory for service providers overriden via inheritance
             return
 
-        if not bool(re.match('^[a-zA-Z]*(\$|-|_|\w)$', self.name)):
+        if not bool(re.match('^[a-zA-Z]*([a-zA-Z]|\s)*(\$|-|_|\w)$', self.name)):
             raise scim_exceptions.ModelInvalidPropertyException(
                 id=self.id,
                 property_name="name",
