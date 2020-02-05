@@ -1,0 +1,51 @@
+{
+  "id": "urn:scim:api:messages:2.0:Error",
+  "name": "Error",
+  "description": "Schema for representing the Error responses",
+  "attributes": [
+    {
+      "name": "status",
+      "type": "string",
+      "multiValued": false,
+      "description": "Status code",
+      "required": true,
+      "caseExact": false,
+      "mutability": "immutable",
+      "returned": "default",
+      "uniqueness": "none"
+    },
+    {
+      "name": "scimType",
+      "type": "string",
+      "multiValued": false,
+      "description": "A SCIM detailed error keyword",
+      "required": false,
+      "caseExact": false,
+      "canonicalValues": [
+        "invalidFilter",
+        "tooMany",
+        "uniqueness",
+        "mutability",
+        "invalidSyntax",
+        "invalidPath",
+        "noTarget",
+        "invalidValue",
+        "invalidVers"
+      ],
+      "mutability": "immutable",
+      "returned": "default",
+      "uniqueness": "none"
+    },
+    {
+      "name": "detail",
+      "type": "string",
+      "multiValued": false,
+      "description": "A detailed, human readable message",
+      "required": false,
+      "caseExact": false,
+      "mutability": "immutable",
+      "returned": "default",
+      "uniqueness": "none"
+    }
+  ]
+}
