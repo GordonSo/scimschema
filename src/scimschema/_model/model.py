@@ -1,5 +1,7 @@
 import re
 import json
+from copy import deepcopy
+
 from .attribute import AttributeFactory
 from . import scim_exceptions
 
@@ -41,7 +43,7 @@ class Model(object):
 
     def validate(self, d):
         for attribute in self.attributes:
-            attribute.validate(d=d)
+            attribute.validate(d=deepcopy(d))
 
     def validate_schema(self):
         exceptions = []
