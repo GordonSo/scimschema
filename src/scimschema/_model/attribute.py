@@ -1,5 +1,6 @@
 import collections
 import re
+from copy import deepcopy
 from datetime import datetime
 from . import scim_exceptions
 
@@ -215,7 +216,7 @@ class Attribute:
 
     def validate(self, d):
         try:
-            value = self._get_value(d)
+            value = self._get_value(deepcopy(d))
             self._validate(value)
 
         except scim_exceptions.ScimAttributeValueNotFoundException:

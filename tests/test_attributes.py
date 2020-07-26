@@ -1,4 +1,6 @@
 import re
+from copy import deepcopy
+
 import pytest
 from scimschema._model import model
 from scimschema._model import attribute
@@ -376,7 +378,9 @@ def test_multi_valued_complex_meta_attribute():
         locator_path="urn:ietf:params:scim:schemas:test:multi_complex_attribute",
     )
     maf.validate_schema()
+    original = deepcopy(response)
     maf.validate(response)
+    assert response == original
 
 
 def test_multi_valued_invalid_complex_meta_attribute():
