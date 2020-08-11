@@ -377,6 +377,8 @@ def test_multi_valued_complex_meta_attribute():
         d=schema,
         locator_path="urn:ietf:params:scim:schemas:test:multi_complex_attribute",
     )
+    assert maf.name == "emails"
+    assert maf.element_attribute.name == "emails"
     maf.validate_schema()
     original = deepcopy(response)
     maf.validate(response)
