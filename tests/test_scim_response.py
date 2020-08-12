@@ -107,7 +107,7 @@ def test_get_meta_schema_without_definitions(schema_without_definition):
     # when get schemas is called
     exception = None
     try:
-        ScimResponse(schema_without_definition, core_schema_definitions=core_schemas.schema, extension_schema_definitions=extension.schema).CoreMetaSchemas
+        ScimResponse(schema_without_definition, core_schema_definitions=core_schemas.schema, extension_schema_definitions=extension.schema)
     except AssertionError as ke:
         exception = ke
 
