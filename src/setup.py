@@ -5,7 +5,7 @@ with open("./README.rst", "r") as fh:
 
 setup(
     name="scimschema",
-    version="0.1.68",
+    version="0.1.69",
     author="Gordon So",
     author_email="gordonkwso@gmail.com",
     description="A validator for System for Cross-domain Identity Management (SCIM) responses given predefine schemas",
