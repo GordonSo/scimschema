@@ -114,5 +114,3 @@ def test_get_meta_schema_without_definitions(schema_without_definition):
     # then exceptions should be raised
     assert isinstance(exception, AssertionError)
     assert 'Response has no specified schema' in str(exception)
-
-

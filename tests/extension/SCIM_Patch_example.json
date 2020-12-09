@@ -1,0 +1,72 @@
+{
+    "id": "urn:ietf:params:scim:api:messages:2.0:PatchOp",
+    "name": "PatchOp",
+    "description": "PatchOp for testing",
+    "attributes": [
+        {
+            "name": "Operations",
+            "type": "complex",
+            "multiValued": true,
+            "description": "What operation",
+            "required": false,
+            "mutability": "readWrite",
+            "subAttributes": [
+                {
+                    "name": "ops",
+                    "type": "string",
+                    "multiValued": false,
+                    "description": "operation",
+                    "required": true,
+                    "mutability": "readWrite",
+                    "returned": "request"
+                },
+                {
+                    "name": "path",
+                    "type": "string",
+                    "multiValued": false,
+                    "description": "path",
+                    "required": true,
+                    "mutability": "readOnly",
+                    "returned": "request"
+                },
+                {
+                    "name": "value",
+                    "type": "complex",
+                    "multiValued": true,
+                    "description": "The branding for the workspace",
+                    "required": false,
+                    "mutability": "readOnly",
+                    "subAttributes": [
+                        {
+                            "name": "display",
+                            "type": "string",
+                            "multiValued": false,
+                            "description": "display",
+                            "required": true,
+                            "mutability": "readWrite",
+                            "returned": "request"
+                        },
+                        {
+                            "name": "$ref",
+                            "type": "reference",
+                            "multiValued": false,
+                            "description": "The URL for the Branding",
+                            "required": true,
+                            "mutability": "readWrite",
+                            "returned": "request"
+                        },
+                        {
+                            "name": "value",
+                            "type": "string",
+                            "multiValued": false,
+                            "description": "value",
+                            "required": true,
+                            "mutability": "readWrite",
+                            "returned": "request"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
