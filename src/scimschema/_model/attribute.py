@@ -2,6 +2,7 @@ import collections
 import re
 from copy import deepcopy
 from datetime import datetime
+
 from . import scim_exceptions
 
 
@@ -10,7 +11,12 @@ class Attribute:
     _accepted_uniqueness_value = {"none", "server", "global"}
 
     def __init__(
-        self, d, locator_path, is_parent_multi_valued=False, is_parent_complex=False
+        self,
+        d,
+        locator_path,
+        is_parent_multi_valued=False,
+        is_parent_complex=False,
+        attribute_type=None,
     ):
         # default values see - https://tools.ietf.org/html/rfc7643#section-2.2
         # Characteristics # https://tools.ietf.org/html/rfc7643#section-7
@@ -24,7 +30,7 @@ class Attribute:
 
         self.id = d.pop("id", None)
         # self.name = d.pop("name", self.name)
-        self.type = d.pop("type", "string")
+        self.type = attribute_type or d.pop("type")
         self.description = d.pop("description", None)
         self.required = d.pop("required", False)
         self.canonicalValues = d.pop("canonicalValues", None)
@@ -464,6 +470,7 @@ class MultiValuedAttribute(Attribute):
             locator_path=locator_path,
             is_parent_multi_valued=is_parent_multi_valued,
             is_parent_complex=is_parent_complex,
+            attribute_type=self.type,
         )
 
         self.name = self.element_attribute.name
@@ -599,9 +606,8 @@ class AttributeFactory:
                 is_parent_multi_valued=is_parent_multi_valued,
                 is_parent_complex=is_parent_complex,
             )
-        attribute_type = (
-            d.get("type", "string") if attribute_type is None else attribute_type
-        )
+
+        attribute_type = attribute_type or d.get("type")
 
         if attribute_type not in attribute_factory.keys():
             raise AssertionError(
