@@ -621,7 +621,7 @@ class AttributeFactory:
         if not (
             attribute_type
             and isinstance(attribute_type, str)
-            and attribute_type not in attribute_factory.keys()
+            and attribute_type in attribute_factory.keys()
         ):
             raise AssertionError(
                 "Attribute type '{}' (path: {}) is not a valid type - expected on of these: ({})".format(
