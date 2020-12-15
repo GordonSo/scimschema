@@ -618,10 +618,10 @@ class AttributeFactory:
 
         attribute_type = attribute_type or d.get("type")
 
-        if (
-            not attribute_type
-            or isinstance(attribute_type, str)
-            or attribute_type not in attribute_factory.keys()
+        if not (
+            attribute_type
+            and isinstance(attribute_type, str)
+            and attribute_type not in attribute_factory.keys()
         ):
             raise AssertionError(
                 "Attribute type '{}' (path: {}) is not a valid type - expected on of these: ({})".format(
