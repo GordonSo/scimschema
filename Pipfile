@@ -14,7 +14,7 @@ pytest-cov = "*"
 black = "*"
 
 [scripts]
-unittest = "pytest"
+tests = "pytest"
 check-style = "black . --check"
 check-import = "isort . --check"
 check-syntax = "mypy ./src/scimschema"
