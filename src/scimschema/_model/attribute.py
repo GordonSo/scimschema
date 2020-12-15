@@ -2,6 +2,7 @@ import collections
 import re
 from copy import deepcopy
 from datetime import datetime
+from typing import Any, Dict, List, Optional, Type, Union
 
 from . import scim_exceptions
 
@@ -12,21 +13,23 @@ class Attribute:
 
     def __init__(
         self,
-        d,
-        locator_path,
-        is_parent_multi_valued=False,
-        is_parent_complex=False,
-        attribute_type=None,
+        d: dict,
+        locator_path: Optional[List[str]],
+        is_parent_multi_valued: bool = False,
+        is_parent_complex: bool = False,
+        attribute_type: str = None,
     ):
         # default values see - https://tools.ietf.org/html/rfc7643#section-2.2
         # Characteristics # https://tools.ietf.org/html/rfc7643#section-7
-        self.__d = d.copy() if not hasattr(self, "__d") is None else self.__d
+        self.__d: dict = d.copy() if not hasattr(self, "__d") is None else self.__d
         self._is_parent_multi_valued = is_parent_multi_valued
         self._is_parent_complex = is_parent_complex
 
         self.name = d.pop("name", None)
         self._locator_path = locator_path
-        self._locator_path.append(self.name)
+        self._locator_path = self._locator_path or []
+        if self.name:
+            self._locator_path.append(self.name)
 
         self.id = d.pop("id", None)
         # self.name = d.pop("name", self.name)
@@ -54,7 +57,7 @@ class Attribute:
                 reference="https://tools.ietf.org/html/rfc7643#section-7",
             )
 
-    def _validate_schema_name(self):
+    def _validate_schema_name(self) -> None:
         msg = 'valid name e.g. must be ALPHA * {{nameChar}} where nameChar   = "$" / "-" / "_" / DIGIT / ALPHA'
         # ^[a-zA-Z] - starts with ALPHA 0...many
         # (\$|\-|_|\w)$ - ends with $ - _ alphanumeric
@@ -176,10 +179,10 @@ class Attribute:
             )
 
     @staticmethod
-    def _get_significant_value(d):
+    def _get_significant_value(d: dict) -> dict:
         return d
 
-    def _get_value(self, d):
+    def _get_value(self, d: dict) -> str:
         try:
             return d.pop(self.name)
         except KeyError:
@@ -187,7 +190,7 @@ class Attribute:
                 d, self._locator_path, self.name, self.multiValued
             )
 
-    def _validate(self, value):
+    def _validate(self, value: Any):
         raise NotImplementedError(
             "Abstract class Attribute does not have validate method - use a concrete Class"
         )
@@ -247,7 +250,7 @@ class DatetimeAttribute(Attribute):
     _accepted_case_exact_value = {False}
     _accepted_uniqueness_value = {"none"}
 
-    def _validate(self, value):
+    def _validate(self, value: Any) -> None:
         try:
             datetime.strptime(value, "%Y-%m-%dT%H:%M:%SZ")
         except ValueError:
@@ -266,7 +269,7 @@ class DecimalAttribute(Attribute):
     _link_reference = "https://tools.ietf.org/html/rfc7643#section-2.3.3"
     _accepted_case_exact_value = {False}
 
-    def _validate(self, value):
+    def _validate(self, value: Any) -> None:
         pos_period = str(value).index(".")
         if not (
             value
@@ -290,7 +293,7 @@ class IntegerAttribute(Attribute):
     _link_reference = "https://tools.ietf.org/html/rfc7643#section-2.3.4"
     _accepted_case_exact_value = {True, False}
 
-    def _validate(self, value):
+    def _validate(self, value: Any) -> None:
         if not (not isinstance(value, bool) and isinstance(value, int)):
             raise scim_exceptions.ScimAttributeInvalidTypeException(
                 expected=self._d,
@@ -311,7 +314,7 @@ class ReferenceAttribute(Attribute):
     _accepted_case_exact_value = {True, False}
     referenceTypes = None
 
-    def _validate_schema_name(self):
+    def _validate_schema_name(self) -> None:
         if self.name == "$ref":
             return
 
@@ -328,7 +331,7 @@ class ReferenceAttribute(Attribute):
             is_parent_complex=is_parent_complex,
         )
 
-    def _validate(self, value):
+    def _validate(self, value: Any) -> None:
         if not (isinstance(value, str)):
             raise scim_exceptions.ScimAttributeInvalidTypeException(
                 expected=self._d,
@@ -449,7 +452,11 @@ class MultiValuedAttribute(Attribute):
     _link_reference = "https://tools.ietf.org/html/rfc7643#section-2.4"
 
     def __init__(
-        self, d, locator_path, is_parent_multi_valued=False, is_parent_complex=False
+        self,
+        d: dict,
+        locator_path: Optional[List[str]],
+        is_parent_multi_valued: bool = False,
+        is_parent_complex: bool = False,
     ):
         self.__d = d.copy()
         self.type = d.get("type", None)  # shared attribute name to core
@@ -589,15 +596,17 @@ attribute_factory = {
 class AttributeFactory:
     @staticmethod
     def create(
-        d,
-        locator_path,
-        attribute_type=None,
-        is_parent_multi_valued=False,
-        is_parent_complex=False,
+        d: dict,
+        locator_path: Union[str, Optional[List[str]]],
+        attribute_type: str = None,
+        is_parent_multi_valued: bool = False,
+        is_parent_complex: bool = False,
     ):
-        locator_path = (
-            locator_path.copy() if isinstance(locator_path, list) else [locator_path]
-        )
+        if isinstance(locator_path, str):
+            locator_path = [locator_path]
+        elif isinstance(locator_path, list):
+            locator_path.copy()
+
         multi_valued = d.get("multiValued", False)
         if multi_valued and attribute_type is None:
             return MultiValuedAttribute(
@@ -609,12 +618,17 @@ class AttributeFactory:
 
         attribute_type = attribute_type or d.get("type")
 
-        if attribute_type not in attribute_factory.keys():
+        if (
+            not attribute_type
+            or isinstance(attribute_type, str)
+            or attribute_type not in attribute_factory.keys()
+        ):
             raise AssertionError(
                 "Attribute type '{}' (path: {}) is not a valid type - expected on of these: ({})".format(
                     attribute_type, locator_path, ", ".join(attribute_factory.keys())
                 )
             )
+
         attribute_class = attribute_factory[attribute_type]
         return attribute_class(
             d=d,
