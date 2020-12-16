@@ -26,8 +26,7 @@ class Attribute:
         self._is_parent_complex = is_parent_complex
 
         self.name = d.pop("name", None)
-        self._locator_path = locator_path.copy() if locator_path else None
-        self._locator_path = self._locator_path or []
+        self._locator_path = locator_path.copy() if locator_path else []
         if self.name:
             self._locator_path.append(self.name)
 
