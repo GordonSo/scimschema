@@ -1,0 +1,23 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+pytest = "*"
+setuptools = "*"
+twine = "*"
+scimschema = {editable = true, path = "./src"}
+mypy = "*"
+isort = "*"
+pytest-cov = "*"
+black = "*"
+
+[scripts]
+tests = "pytest"
+check-style = "black . --check"
+check-import = "isort . --check"
+check-syntax = "mypy ./src/scimschema"
+
+[pipenv]
+allow_prereleases = true

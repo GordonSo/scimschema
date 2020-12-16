@@ -22,7 +22,6 @@ Example use case
 
     pip install scimschema
 
-
 2) Specify any custom schemas in json format as per the rfc requirement: https://tools.ietf.org/html/rfc7643#section-2
 
 3) Put the json files under a Python package as per our examples here: https://github.com/GordonSo/scimschema/tree/master/tests/extension (also checkout our __init__() file which is handy for loading the json)

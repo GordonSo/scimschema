@@ -1,18 +1,24 @@
-from .._model.scim_exceptions import AggregatedScimMultValueAttributeValidationExceptions
+from .._model import scim_exceptions
 
 
 class ScimResponse(dict):
-
     def __init__(self, data, core_schema_definitions, extension_schema_definitions):
 
         super().__init__()
         for key in data.keys():
             self[key] = data[key]
 
-        self._core_meta_schemas, self._extension_schema_definitions = self._get_meta_schemas(core_schema_definitions, extension_schema_definitions)
+        (
+            self._core_meta_schemas,
+            self._extension_schema_definitions,
+        ) = self._get_meta_schemas(
+            core_schema_definitions, extension_schema_definitions
+        )
         if len(self._core_meta_schemas) != 1:
             raise AssertionError(
-                "Response must specify exactly one core schema - {}".format(", ".join([s.id for s in self._core_meta_schemas]))
+                "Response must specify exactly one core schema - {}".format(
+                    ", ".join([s.id for s in self._core_meta_schemas])
+                )
             )
 
     def _get_meta_schemas(self, core_schema_definitions, extension_schema_definitions):
@@ -23,11 +29,15 @@ class ScimResponse(dict):
 
         core_schema_names = list(core_schema_definitions.keys())
         core_meta_schemas = [
-            core_schema_definitions[schema_name] for schema_name in schema_names if schema_name in core_schema_names
+            core_schema_definitions[schema_name]
+            for schema_name in schema_names
+            if schema_name in core_schema_names
         ]
 
         extension_meta_schemas = [
-            extension_schema_definitions[schema_name] for schema_name in schema_names if schema_name not in core_schema_names
+            extension_schema_definitions[schema_name]
+            for schema_name in schema_names
+            if schema_name not in core_schema_names
         ]
         return core_meta_schemas, extension_meta_schemas
 
@@ -48,7 +58,6 @@ class ScimResponse(dict):
                 exceptions.append(ae)
 
         if len(exceptions) > 0:
-            raise AggregatedScimMultValueAttributeValidationExceptions(
-                location="Scim response",
-                exceptions=exceptions
+            raise scim_exceptions.AggregatedScimMultValueAttributeValidationExceptions(
+                location="Scim response", exceptions=exceptions
             )
