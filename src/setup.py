@@ -15,7 +15,7 @@ def main():
         version="develop",
         author="Gordon So",
         author_email=app.__author_email__,
-        description="description",
+        description=app.__description__,
         license=[
             c.rsplit("::", 1)[1].strip()
             for c in app.__classifiers__
