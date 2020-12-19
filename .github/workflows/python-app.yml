@@ -31,8 +31,11 @@ jobs:
       run: |
         pipenv run checkstyle
     - name: Run import tests
+      run: |
         pipenv run checkimport
     - name: Run syntax tests
+      run: |
         pipenv run checksyntax
     - name: Run unit tests
+      run: |
         pipenv run tests
