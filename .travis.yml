@@ -12,10 +12,11 @@ python:
 
 # command to install dependencies
 install:
-  - pip install -r requirements.txt
-  - pushd src
-  - python setup.py develop
-  - popd
+  - pip install pipenv
+  - pipenv install --dev
 # command to run tests
 script:
-  - pytest
+  - pipenv run tests
+  - pipenv run check-style
+  - pipenv run check-import
+  - pipenv run check-syntax

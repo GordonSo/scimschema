@@ -4,7 +4,7 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
-pytest = "*"
+https://github.com/GordonSo/scimschema/pull/29/conflict?name=src%252Fscimschema%252F__init__.py&ancestor_oid=649eadb7e266ab8486f82ab4bf0e80ff2f4f86f7&base_oid=63dae2379380e016560f9cbca9ec8564081802d0&head_oid=b094c80039238a09ef14347ff313c2d15b1b258apytest = "*"
 setuptools = "*"
 twine = "*"
 scimschema = {editable = true, path = "./src"}
