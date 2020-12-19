@@ -11,8 +11,8 @@ def main():
     import scimschema as app
 
     setup(
-        name=app.__name__,
-        version="develop",
+        name="scimschema",
+        version=app.__version__,
         author=app.__author__,
         author_email=app.__author_email__,
         description=app.__description__,
