@@ -12,7 +12,7 @@ __classifiers__ = [
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
 ]
-__description__ = "A validator for System for Cross-domain Identity Management (SCIM) responses given predefine schemas"
+__description__ = "A validator for System for Cross domain Identity Management (SCIM) responses given predefine schemas"
 __name__ = "scimschema"
 __version__ = os.getenv("BUILD_NUMBER", "develop")
 __url__ = "https://github.com/GordonSo/scimschema"
