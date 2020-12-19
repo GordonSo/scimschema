@@ -31,6 +31,6 @@ jobs:
         TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
         BUILD_NUMBER: ${{ github.run_number }}
       run: |
-        pipenv install -d
+        pipenv install --dev
         pipenv run build
-        twine upload dist/* -r testpypi
+        pipenv run deploy

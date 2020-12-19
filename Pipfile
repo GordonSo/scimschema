@@ -15,9 +15,9 @@ black = "*"
 
 [scripts]
 tests = "pytest"
-check-style = "black . --check"
-check-import = "isort . --check"
-check-syntax = "mypy ./src/scimschema"
+checkstyle = "black . --check"
+checkimport = "isort . --check"
+checksyntax = "mypy ./src/scimschema"
 build = "python src/setup.py sdist bdist_wheel"
 deploy = "twine upload dist/* -r testpypi"
 

@@ -28,7 +28,7 @@ jobs:
     - name: Run tests
       run: |
         pipenv install --dev
-        pipenv run check-style
-        pipenv run check-import
-        pipenv run check-syntax
+        pipenv run checkstyle
+        pipenv run checkimport
+        pipenv run checksyntax
         pipenv run tests
