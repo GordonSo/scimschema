@@ -11,11 +11,11 @@ def main():
     import scimschema as app
 
     setup(
-        name=app.__name__,
-        version=app.__version__,
-        author=app.__author__,
-        author_email=app.__author_email__,
-        description=app.__description__,
+        name="scimschema",
+        version="develop",
+        author="Gordon So",
+        author_email="gordonkwso@gmail.com",
+        description="description",
         license=[
             c.rsplit("::", 1)[1].strip()
             for c in app.__classifiers__
@@ -23,8 +23,8 @@ def main():
         ][0],
         long_description=read("./README.rst"),
         long_description_content_type="text/x-rst",
-        url=app.__url__,
-        classifiers=app.__classifiers__,
+        url="",
+        classifiers="",
         packages=find_packages(),
         include_package_data=True
     )
