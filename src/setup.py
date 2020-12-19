@@ -13,7 +13,7 @@ def main():
     setup(
         name="scimschema",
         version="develop",
-        author="Gordon So",
+        author=app.__author__,
         author_email=app.__author_email__,
         description=app.__description__,
         license=[
