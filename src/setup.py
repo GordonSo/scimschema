@@ -26,7 +26,7 @@ def main():
         url=app.__url__,
         classifiers=app.__classifiers__,
         packages=find_packages(),
-        include_package_data=True,
+        include_package_data=True
     )
 
 
