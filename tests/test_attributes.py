@@ -2,8 +2,8 @@ import re
 from copy import deepcopy
 
 import pytest
-from scimschema._model import model
-from scimschema._model import attribute
+
+from scimschema._model import attribute, model
 
 
 def test_default_meta_attribute():
@@ -29,7 +29,7 @@ def test_default_meta_attribute():
 
     def grep_exception_counts(msg):
         try:
-            prog = re.compile("\d aggregated exceptions found")
+            prog = re.compile(r"(\d+) aggregated exceptions found")
             return next(i for i in prog.findall(msg))
         except TypeError:
             return None
@@ -215,7 +215,7 @@ def test_invalid_datetime_meta_attribute():
         assert_exceptions = ae
 
     pattern = re.compile(
-        "'Single-value attribute: 'xyz1-01-23T04:56:22' \(at path.*\) is expected to be 'datetime with format 2008-01-23T04:56:22Z'"
+        r"'Single-value attribute: 'xyz1-01-23T04:56:22' (\()at path.*(\)) is expected to be 'datetime with format 2008-01-23T04:56:22Z'"
     )
     assert re.search(pattern=pattern, string=str(assert_exceptions)) is not None
 
@@ -246,7 +246,7 @@ def test_invalid_decimal_meta_attribute():
         assert_exceptions = ae
 
     pattern = re.compile(
-        "'Single-value attribute: '.1' \(at path:.*\) is expected to be 'must be a real number with at least one digit to the left and right of the period'"
+        r"'Single-value attribute: '.1' (\()at path:.*(\)) is expected to be 'must be a real number with at least one digit to the left and right of the period'"
     )
     assert re.search(pattern=pattern, string=str(assert_exceptions)) is not None
 
@@ -288,7 +288,9 @@ def test_invalid_string_meta_attribute():
     except AssertionError as ae:
         assert_exceptions = ae
 
-    pattern = re.compile("'\(int\)123' \(at path.*\) is expected to be 'type string'")
+    pattern = re.compile(
+        r"'(\()int(\))123' (\()at path.*(\)) is expected to be 'type string'"
+    )
     assert re.search(pattern=pattern, string=str(assert_exceptions)) is not None
 
 
@@ -462,11 +464,11 @@ def test_multi_valued_invalid_complex_meta_attribute():
         exception = ae
     assert exception is not None, "Expected 2 assert exceptions"
     pattern_invalid_str = re.compile(
-        "'\(bool\)False' \(at path: urn:ietf:params:scim:schemas:test:multi_complex_attribute/emails/type\) is expected to be 'type string'"
+        r"'(\()bool(\))False' (\()at path: urn:ietf:params:scim:schemas:test:multi_complex_attribute/emails/type(\)) is expected to be 'type string'"
     )
     assert re.search(pattern_invalid_str, str(exception))
     pattern_int = re.compile(
-        "'\(int\)888' \(at path: urn:ietf:params:scim:schemas:test:multi_complex_attribute/emails/type\) is expected to be 'type string'"
+        r"'(\()int(\))888' (\()at path: urn:ietf:params:scim:schemas:test:multi_complex_attribute/emails/type(\)) is expected to be 'type string'"
     )
     assert re.search(pattern_int, str(exception))
 
@@ -492,11 +494,11 @@ def test_multi_valued_invalid_string_meta_attribute():
         assert_exceptions = ae
 
     pattern_123 = re.compile(
-        "'\(int\)123' \(at path.*\) is expected to be 'type string'"
+        r"'(\()int(\))123' (\()at path.*(\)) is expected to be 'type string'"
     )
     assert re.search(pattern=pattern_123, string=str(assert_exceptions)) is not None
     pattern_567 = re.compile(
-        "'\(int\)567' \(at path.*\) is expected to be 'type string'"
+        r"'(\()int(\))567' (\()at path.*(\)) is expected to be 'type string'"
     )
     assert re.search(pattern=pattern_567, string=str(assert_exceptions)) is not None
 

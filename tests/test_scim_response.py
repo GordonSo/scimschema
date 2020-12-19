@@ -63,7 +63,7 @@ def test_validating_invalid_example_user():
         assert_error = ae
     assert assert_error is not None
     pattern_invalid_str = re.compile(
-        "'Single-value attribute:userName' is required at the following location '\['urn:ietf:params:scim:schemas:core:2.0:User', 'userName'\]' but found '{'"
+        r"'Single-value attribute:userName' is required at the following location '(\[)'urn:ietf:params:scim:schemas:core:2.0:User', 'userName'(\])' but found '{'"
     )
     assert re.search(pattern_invalid_str, str(assert_error))
 
@@ -88,7 +88,7 @@ def test_validating_valid_example_account():
         assert_error = ae
     assert assert_error is not None
     pattern_invalid_str = re.compile(
-        "'Single-value attribute:accountPackage' is required at the following location '\['urn:huddle:params:scim:schemas:extension:2.0:Account', 'package', 'accountPackage'\]' but found '{}'"
+        r"'Single-value attribute:accountPackage' is required at the following location '(\[)'urn:huddle:params:scim:schemas:extension:2.0:Account', 'package', 'accountPackage'(\])' but found '{}'"
     )
     assert re.search(pattern_invalid_str, str(assert_error))
 

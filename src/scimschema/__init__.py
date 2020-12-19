@@ -1,14 +1,28 @@
-from scimschema.core_schemas import load_dict as _load_dict
+import os
+
 from scimschema import core_schemas
-from scimschema._model.schema_response import ScimResponse
 from scimschema._model import attribute
+from scimschema._model.schema_response import ScimResponse
+from scimschema.core_schemas import load_dict as _load_dict
+
+__author__ = "Gordon So"
+__author_email__ = "gordonkwso@gmail.com"
+__classifiers__ = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+__description__ = "A validator for System for Cross-domain Identity Management (SCIM) responses given predefine schemas"
+__name__ = "scimschema"
+__version__ = os.getenv("BUILD_NUMBER", "develop")
+__url__ = "https://github.com/GordonSo/scimschema"
 
 
 def validate(data, extension_schema_definitions):
     ScimResponse(
         data=data,
         core_schema_definitions=core_schemas.schema,
-        extension_schema_definitions=extension_schema_definitions
+        extension_schema_definitions=extension_schema_definitions,
     ).validate()
 
 
