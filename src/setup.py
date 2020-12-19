@@ -23,8 +23,8 @@ def main():
         ][0],
         long_description=read("./README.rst"),
         long_description_content_type="text/x-rst",
-        url="",
-        classifiers="",
+        url=app.__url__,
+        classifiers=app.__classifiers__,
         packages=find_packages(),
         include_package_data=True
     )
