@@ -11,11 +11,11 @@ def main():
     import scimschema as app
 
     setup(
-        name=app.__name__,
+        name="scimschema",
         version="develop",
-        author=app.__author__,
-        author_email=app.__author_email__,
-        description=app.__description__,
+        author="Gordon So",
+        author_email="gordonkwso@gmail.com",
+        description="description",
         license=[
             c.rsplit("::", 1)[1].strip()
             for c in app.__classifiers__
