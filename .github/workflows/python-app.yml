@@ -26,7 +26,7 @@ jobs:
     - name: Install pipenv
       run: |
         pip install pipenv
-        pipenv install -d --sequential --vebose
+        pipenv install -d --sequential --verbose
     - name: Run style tests
       run: |
         pipenv run checkstyle
