@@ -18,6 +18,8 @@ __version__ = os.getenv("BUILD_NUMBER", "develop")
 __url__ = "https://github.com/GordonSo/scimschema"
 
 
+print(f"Build_number: {__version__}")
+
 def validate(data, extension_schema_definitions):
     ScimResponse(
         data=data,
