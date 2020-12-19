@@ -24,11 +24,15 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
     - name: Install pipenv
-      run: pip install pipenv
-    - name: Run tests
       run: |
+        pip install pipenv
         pipenv install --dev
+    - name: Run style tests
+      run: |
         pipenv run checkstyle
+    - name: Run import tests
         pipenv run checkimport
+    - name: Run syntax tests
         pipenv run checksyntax
+    - name: Run unit tests
         pipenv run tests
