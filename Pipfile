@@ -7,7 +7,7 @@ verify_ssl = true
 pytest = "*"
 setuptools = "*"
 twine = "*"
-scimschema = {editable = true, path = "./src"}
+scimschema = {editable = true, path = "src"}
 mypy = "*"
 isort = "*"
 pytest-cov = "*"
