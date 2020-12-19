@@ -9,7 +9,7 @@ from scimschema._model.schema_response import ScimResponse
 
 from . import extension
 
-# ------------------------------The Following are method tests ------------------------------ #
+# ------------------------------The Following are method tests_scimschema ------------------------------ #
 
 
 def _dict_to_json(d):
