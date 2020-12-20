@@ -41,8 +41,8 @@ jobs:
 
     - name: Install dependencies
       run: |
-        pip install pipenv -d
-        pipenv install
+        pip install pipenv
+        pipenv install -d
         pipenv run build
 
     - name: Run tests
