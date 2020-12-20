@@ -24,13 +24,26 @@ jobs:
     - name: Install dependencies
       run: |
         pip install pipenv
-
-    - name: Build and publish
-      env:
-        TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
-        TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
-        BUILD_NUMBER: ${{ github.run_number }}
-      run: |
         pipenv install
         pipenv run build
-        pipenv run deploy
+
+#     - name: Build and publish
+#       env:
+#         TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
+#         TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
+#         BUILD_NUMBER: ${{ github.run_number }}
+#       run: |
+#         pipenv run deploy
+
+
+    - name: Publish distribution 📦 to Test PyPI
+      uses: pypa/gh-action-pypi-publish@master
+      with:
+        password: ${{ secrets.TEST_PYPI_API_TOKEN }}
+        repository_url: https://test.pypi.org/legacy/
+
+    - name: Publish distribution 📦 to PyPI
+      if: startsWith(github.ref, 'refs/tags')
+      uses: pypa/gh-action-pypi-publish@master
+      with:
+        password: ${{ secrets.PYPI_API_TOKEN }}
