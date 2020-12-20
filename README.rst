@@ -7,8 +7,8 @@
 
 ScimSchema
 ==========
-.. image:: https://travis-ci.org/GordonSo/scimschema.svg?branch=master
-    :target: https://travis-ci.org/GordonSo/scimschema
+.. image:: https://github.com/GordonSo/scimschema/workflows/Upload%20Python%20Package/badge.svg
+    :target: https://github.com/GordonSo/scimschema/actions
 
 Validate JSon content given a predefined set of SCIM Schemas (in JSON representation format) as specified in `SCIM <http://www.simplecloud.info/>`_ (supporting Python 3+).
 
@@ -18,7 +18,6 @@ Example use case
 1) Install the library via pip:
 
 .. code-block:: python
-
 
     pip install scimschema
 
