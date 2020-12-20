@@ -7,7 +7,7 @@
 
 ScimSchema
 ==========
-.. image:: https://github.com/GordonSo/scimschema/workflows/Python%20application/badge.svg
+.. image:: https://github.com/GordonSo/scimschema/workflows/Upload%20Python%20Package/badge.svg
     :target: https://github.com/GordonSo/scimschema/actions
 
 Validate JSon content given a predefined set of SCIM Schemas (in JSON representation format) as specified in `SCIM <http://www.simplecloud.info/>`_ (supporting Python 3+).
