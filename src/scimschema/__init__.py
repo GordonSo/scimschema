@@ -5,27 +5,6 @@ from scimschema._model import attribute
 from scimschema._model.schema_response import ScimResponse
 from scimschema.core_schemas import load_dict as _load_dict
 
-__author__ = "Gordon So"
-__author_email__ = "gordonkwso@gmail.com"
-__classifiers__ = [
-    "Programming Language :: Python :: 3",
-    "License :: OSI Approved :: MIT License",
-    "Operating System :: OS Independent",
-]
-__description__ = "A validator for System for Cross domain Identity Management (SCIM) responses given predefine schemas"
-__name__ = "scimschema"
-build_number = os.getenv("GITHUB_RUN_NUMBER", "")
-__version__ = f"{get_major_version()}.{build_number}" if build_number else "develop"
-__url__ = "https://github.com/GordonSo/scimschema"
-
-
-print(f"Build_number: {__version__}")
-
-
-def get_major_version() -> str:
-    with open("VERSION") as f:
-        return f.read()
-
 
 def validate(data, extension_schema_definitions):
     ScimResponse(
