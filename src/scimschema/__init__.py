@@ -14,7 +14,7 @@ __classifiers__ = [
 ]
 __description__ = "A validator for System for Cross domain Identity Management (SCIM) responses given predefine schemas"
 __name__ = "scimschema"
-build_number= os.getenv("GITHUB_RUN_NUMBER", "")
+build_number = os.getenv("GITHUB_RUN_NUMBER", "")
 __version__ = f"0.2.{build_number}" if build_number else "develop"
 __url__ = "https://github.com/GordonSo/scimschema"
 
