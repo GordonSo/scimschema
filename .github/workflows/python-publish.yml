@@ -4,32 +4,14 @@
 name: Upload Python Package
 
 on:
-  push:
+  pull_request:
     branches: [ master ]
+#   push:
+#     branches: [ master ]
 
 jobs:
 
-  release:
-    name: Create Release
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@master
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          body: |
-            Changes in this Release
-          draft: false
-          prerelease: false
-
-  deploy:
-    needs: release
+  test:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -51,6 +33,7 @@ jobs:
         pipenv run checkimport
         pipenv run checksyntax
         pipenv run tests
+        pipenv run build
 
     - name: Publish distribution 📦 to Test PyPI
       uses: pypa/gh-action-pypi-publish@master
@@ -63,3 +46,24 @@ jobs:
 #       uses: pypa/gh-action-pypi-publish@master
 #       with:
 #         password: ${{ secrets.PYPI_API_TOKEN }}
+
+  release:
+    name: Create Release
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@master
+
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+      with:
+        tag_name: $(cat /home/runner/work/scimschema/src/scimschema/VERSION)${{ GITHUB_RUN_NUMBER }}
+        release_name: Release ${{ github.ref }}
+        body: |
+          Changes in this Release
+        draft: true
+        prerelease: true

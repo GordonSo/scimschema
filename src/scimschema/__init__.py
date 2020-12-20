@@ -15,11 +15,16 @@ __classifiers__ = [
 __description__ = "A validator for System for Cross domain Identity Management (SCIM) responses given predefine schemas"
 __name__ = "scimschema"
 build_number = os.getenv("GITHUB_RUN_NUMBER", "")
-__version__ = f"0.2.{build_number}" if build_number else "develop"
+__version__ = f"{get_major_version()}.{build_number}" if build_number else "develop"
 __url__ = "https://github.com/GordonSo/scimschema"
 
 
 print(f"Build_number: {__version__}")
+
+
+def get_major_version() -> str:
+    with open("VERSION") as f:
+        return f.read()
 
 
 def validate(data, extension_schema_definitions):
