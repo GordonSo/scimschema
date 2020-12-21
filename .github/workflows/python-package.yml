@@ -1,6 +1,6 @@
 # This workflow will install Python dependencies, run tests and create release and publish
 
-name: Python package
+name: Python package and publish
 
 on:
   push:
