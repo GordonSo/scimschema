@@ -93,7 +93,7 @@ jobs:
     steps:
     - name: Get version
       id: vars
-      run: echo ::set-output name=version::$(cat ./scimschema/VERSION)
+      run: echo ::set-output name=version::$(cat scimschema/VERSION)
 
     - name: Checkout code
       uses: actions/checkout@master
