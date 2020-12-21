@@ -92,7 +92,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Get version
-      run: echo ::set-env name=version::$(cat ./scimschema/VERSION)
+      run: |
+        export ACTIONS_ALLOW_UNSECURE_COMMANDS=true
+        echo ::set-env name=version::$(cat ./scimschema/VERSION)
 
     - name: Checkout code
       uses: actions/checkout@master
