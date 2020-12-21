@@ -20,6 +20,7 @@ repository = "https://github.com/GordonSo/scimschema"
 keywords = ["scimschema", "scim"]
 version = "0.2.86"
 
+
 [tool.poetry.dependencies]
 python = ">=3.6"
 
