@@ -13,6 +13,41 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v1
+        with:
+          python-version: '3.x'
+
+      - name: Install poetry
+        run: |
+          curl -fsS -o get-poetry.py https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py
+          python get-poetry.py -y
+
+      - name: Configure poetry
+        run: |
+          source $HOME/.poetry/env
+          poetry config virtualenvs.in-project true
+
+      - name: Set up cache
+        uses: actions/cache@v1
+        id: cache
+        with:
+          path: .venv
+          key: venv-${{ runner.os }}-${{ steps.full-python-version.outputs.version }}-${{ hashFiles('**/poetry.lock') }}
+
+      - name: Ensure cache is healthy
+        if: steps.cache.outputs.cache-hit == 'true'
+        run: |
+          source $HOME/.poetry/env
+          poetry run pip --version >/dev/null 2>&1 || rm -rf .venv
+
+      - name: Install Dependencies
+        run: |
+          source $HOME/.poetry/env
+          poetry install
+
       - name: Publish Test
         env:
           PYPI_TOKEN: ${{ secrets.TEST_PYPI_API_TOKEN }}
