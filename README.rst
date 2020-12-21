@@ -91,6 +91,7 @@ Creating new release
 --------------------
 
 Update scimschema/VERSION and pyproject.toml
+Merge into `release` branch
 
 Contributing
 ------------
