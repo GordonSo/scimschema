@@ -90,7 +90,7 @@ class Model(object):
             # OPTIONAL for scim schema - mandatory for service providers overriden via inheritance
             return
 
-        if not bool(re.match("^[a-zA-Z]*([a-zA-Z]|\s)*(\$|-|_|\w)$", self.name)):
+        if not bool(re.match(r"^[a-zA-Z]*([a-zA-Z]|\s)*(\$|-|_|\w)$", self.name)):
             raise scim_exceptions.ModelInvalidPropertyException(
                 id=self.id,
                 property_name="name",
@@ -131,7 +131,7 @@ class Model(object):
 
 class MetaServiceProviderSchema(Model):
     def _validate_schema_name(self):
-        if self.name is None or not bool(re.match(self.name, "^[\w]*(\$|\-|_|\d|\w)$")):
+        if self.name is None or not bool(re.match(self.name, r"^[\w]*(\$|\-|_|\d|\w)$")):
             raise scim_exceptions.ModelInvalidPropertyException(
                 id=self.id,
                 property_name="name",
