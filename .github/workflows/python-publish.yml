@@ -63,9 +63,9 @@ jobs:
       run: |
         source $HOME/.poetry/env
         poetry config pypi-token.pypi $PYPI_TOKEN
-        poetry config http-basic.pypi "__token__" "${PYPI_TOKEN}"
+        poetry config http-basic.pypi
         poetry config repositories.testpypi https://test.pypi.org/legacy/
-        poetry publish --build -r testpypi
+        poetry publish --build -r testpypi --username "__token__" --password $PYPI_TOKEN
 
 #     - name: Publish distribution 📦 to PyPI
 #       if: startsWith(github.ref, 'refs/tags')
