@@ -63,6 +63,7 @@ jobs:
       run: |
         source $HOME/.poetry/env
         poetry config pypi-token.pypi $PYPI_TOKEN
+        poetry config http-basic.pypi "__token__" "${PYPI_TOKEN}"
         poetry config repositories.testpypi https://test.pypi.org/legacy/
         poetry publish --build -r testpypi
 
