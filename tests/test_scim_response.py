@@ -4,7 +4,7 @@ import re
 import pytest
 
 from scimschema import core_schemas
-from scimschema._model import ScimResponse
+from scimschema._model.schema_response import ScimResponse
 
 from . import extension
 
