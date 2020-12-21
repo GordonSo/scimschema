@@ -35,7 +35,9 @@ jobs:
 
 
     - name: Configure poetry
-      run: poetry config virtualenvs.in-project true
+      run: |
+        source $HOME/.poetry/env
+        poetry config virtualenvs.in-project true
 
     - name: Set up cache
       uses: actions/cache@v1
