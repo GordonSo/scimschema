@@ -1,6 +1,6 @@
-# This workflow will install Python dependencies, run tests and create release
+# This workflow will install Python dependencies, run tests and create release and publish
 
-name: Python package
+name: Python package and publish
 
 on:
   push:
@@ -78,3 +78,26 @@ jobs:
           Changes in this Release
         draft: false
         prerelease: false
+
+      - name: Publish Test
+        env:
+          PYPI_TOKEN: ${{ secrets.TEST_PYPI_API_TOKEN }}
+        run: |
+          source $HOME/.poetry/env
+          export POETRY_PYPI_TOKEN_PYPI=$PYPI_TOKEN
+
+          poetry config pypi-token.testpypi $PYPI_TOKEN
+          poetry config http-basic.testpypi "__token__" "${PYPI_TOKEN}"
+          poetry config repositories.testpypi https://test.pypi.org/legacy/
+          poetry publish --build -r testpypi
+
+      - name: Publish
+        env:
+          PYPI_TOKEN: ${{ secrets.PYPI_API_TOKEN }}
+        run: |
+          source $HOME/.poetry/env
+          export POETRY_PYPI_TOKEN_PYPI=$PYPI_TOKEN
+
+          poetry config pypi-token.pypi $PYPI_TOKEN
+          poetry config http-basic.pypi "__token__" "${PYPI_TOKEN}"
+          poetry publish --build
