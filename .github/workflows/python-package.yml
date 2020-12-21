@@ -57,6 +57,7 @@ jobs:
   Release:
     name: Create Release
     needs: Test
+    
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
@@ -81,6 +82,7 @@ jobs:
 
   Publish:
     name: Publish to Pypi
+    needs: Release
 
     runs-on: ubuntu-latest
     steps:
