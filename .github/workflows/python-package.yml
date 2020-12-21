@@ -76,8 +76,8 @@ jobs:
         release_name: Release ${{ steps.vars.outputs.version }}
         body: |
           Changes in this Release
-        draft: true
-        prerelease: true
+        draft: false
+        prerelease: false
 
       - name: Publish Test
         env:
