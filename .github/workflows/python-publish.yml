@@ -56,9 +56,6 @@ jobs:
         poetry run isort . --check
         poetry run mypy ./scimschema ./tests
         poetry run pytest
-        poetry build
-        poetry config repositories.testpypi https://test.pypi.org/legacy/
-        poetry publish -r testpypi
 
     - name: Publish
       env:
@@ -66,7 +63,8 @@ jobs:
       run: |
         source $HOME/.poetry/env
         poetry config pypi-token.pypi $PYPI_TOKEN
-        poetry publish  --build
+        poetry config repositories.testpypi https://test.pypi.org/legacy/
+        poetry publish --build -r testpypi
 
 #     - name: Publish distribution 📦 to PyPI
 #       if: startsWith(github.ref, 'refs/tags')
