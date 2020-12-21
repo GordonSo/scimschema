@@ -91,6 +91,9 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     steps:
+    - name: Get version
+      run: echo ::set-env name=version::$(cat ./scimschema/VERSION)
+
     - name: Checkout code
       uses: actions/checkout@master
 
@@ -100,8 +103,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
       with:
-        tag_name: $(cat /home/runner/work/scimschema/VERSION)
-        release_name: Release $(cat /home/runner/work/scimschema/VERSION)
+        tag_name: v${{ env.version }}
+        release_name: Release v${{ env.version }}
         body: |
           Changes in this Release
         draft: true
