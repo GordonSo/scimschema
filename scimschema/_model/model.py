@@ -131,7 +131,9 @@ class Model(object):
 
 class MetaServiceProviderSchema(Model):
     def _validate_schema_name(self):
-        if self.name is None or not bool(re.match(self.name, r"^[\w]*(\$|\-|_|\d|\w)$")):
+        if self.name is None or not bool(
+            re.match(self.name, r"^[\w]*(\$|\-|_|\d|\w)$")
+        ):
             raise scim_exceptions.ModelInvalidPropertyException(
                 id=self.id,
                 property_name="name",

@@ -60,7 +60,9 @@ class Attribute:
         msg = 'valid name e.g. must be ALPHA * {{nameChar}} where nameChar   = "$" / "-" / "_" / DIGIT / ALPHA'
         # ^[a-zA-Z] - starts with ALPHA 0...many
         # (\$|\-|_|\w)$ - ends with $ - _ alphanumeric
-        if self.name is None or not bool(re.match(r"^[a-zA-Z](\$|-|_|\w)*$", self.name)):
+        if self.name is None or not bool(
+            re.match(r"^[a-zA-Z](\$|-|_|\w)*$", self.name)
+        ):
             raise scim_exceptions.ModelAttributeCharacteristicNotAllowedException(
                 locator_path=self._locator_path,
                 attribute_name="name",
