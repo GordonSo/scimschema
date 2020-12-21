@@ -54,7 +54,7 @@ jobs:
         poetry run mypy ./scimschema ./tests
         poetry run pytest
         
-  release:
+  Release:
     name: Create Release
     needs: Test
     runs-on: ubuntu-latest
@@ -78,6 +78,28 @@ jobs:
           Changes in this Release
         draft: false
         prerelease: false
+
+  Publish:
+    name: Publish to Pypi
+
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v1
+      with:
+        python-version: '3.x'
+
+    - name: Install poetry
+      run: |
+        curl -fsS -o get-poetry.py https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py
+        python get-poetry.py -y
+
+    - name: Configure poetry
+      run: |
+        source $HOME/.poetry/env
+        poetry config virtualenvs.in-project true
 
     - name: Publish Test
       env:
