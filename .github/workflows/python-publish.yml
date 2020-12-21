@@ -1,65 +1,72 @@
-# This workflows will upload a Python Package using Twine when a release is created
+# This workflows will upload a Python Package using Poetry when a release is created
 # For more information see: https://help.github.com/en/actions/language-and-framework-guides/using-python-with-github-actions#publishing-to-package-registries
 
 name: Upload Python Package
 
 on:
-  push:
-    branches: [ master ]
+  release:
+    types: [created]
 
 jobs:
 
-  release:
-    name: Create Release
+  Upload:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout code
-        uses: actions/checkout@master
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+      - uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v1
         with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          body: |
-            Changes in this Release
-          draft: false
-          prerelease: false
+          python-version: '3.x'
 
-  deploy:
-    needs: release
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
+      - name: Install poetry
+        run: |
+          curl -fsS -o get-poetry.py https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py
+          python get-poetry.py -y
 
-    - name: Set up Python
-      uses: actions/setup-python@v1
-      with:
-        python-version: '3.x'
+      - name: Configure poetry
+        run: |
+          source $HOME/.poetry/env
+          poetry config virtualenvs.in-project true
 
-    - name: Install dependencies
-      run: |
-        pip install pipenv
-        pipenv install -d
-        pipenv run build
+      - name: Set up cache
+        uses: actions/cache@v1
+        id: cache
+        with:
+          path: .venv
+          key: venv-${{ runner.os }}-${{ steps.full-python-version.outputs.version }}-${{ hashFiles('**/poetry.lock') }}
 
-    - name: Run tests
-      run: |
-        pipenv run checkstyle
-        pipenv run checkimport
-        pipenv run checksyntax
-        pipenv run tests
+      - name: Ensure cache is healthy
+        if: steps.cache.outputs.cache-hit == 'true'
+        run: |
+          source $HOME/.poetry/env
+          poetry run pip --version >/dev/null 2>&1 || rm -rf .venv
 
-    - name: Publish distribution 📦 to Test PyPI
-      uses: pypa/gh-action-pypi-publish@master
-      with:
-        password: ${{ secrets.TEST_PYPI_API_TOKEN }}
-        repository_url: https://test.pypi.org/legacy/
+      - name: Install Dependencies
+        run: |
+          source $HOME/.poetry/env
+          poetry install
 
-#     - name: Publish distribution 📦 to PyPI
-#       if: startsWith(github.ref, 'refs/tags')
-#       uses: pypa/gh-action-pypi-publish@master
-#       with:
-#         password: ${{ secrets.PYPI_API_TOKEN }}
+      - name: Publish Test
+        env:
+          PYPI_TOKEN: ${{ secrets.TEST_PYPI_API_TOKEN }}
+        run: |
+          source $HOME/.poetry/env
+          export POETRY_PYPI_TOKEN_PYPI=$PYPI_TOKEN
+
+          poetry config pypi-token.testpypi $PYPI_TOKEN
+          poetry config http-basic.testpypi "__token__" "${PYPI_TOKEN}"
+          poetry config repositories.testpypi https://test.pypi.org/legacy/
+          poetry publish --build -r testpypi
+
+      - name: Publish
+        env:
+          PYPI_TOKEN: ${{ secrets.PYPI_API_TOKEN }}
+        run: |
+          source $HOME/.poetry/env
+          export POETRY_PYPI_TOKEN_PYPI=$PYPI_TOKEN
+
+          poetry config pypi-token.pypi $PYPI_TOKEN
+          poetry config http-basic.pypi "__token__" "${PYPI_TOKEN}"
+          poetry publish --build

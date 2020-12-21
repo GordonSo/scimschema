@@ -1,0 +1,35 @@
+[tool.poetry]
+authors = [ "Gordon So <gordonkwso@gmail.com>"]
+
+name = "scimschema"
+description = "A validator for System for Cross domain Identity Management (SCIM) responses given predefine schemas"
+license = "MIT"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent"
+]
+include = [
+    "LICENSE",
+    "VERSION",
+    "README.rst",
+    "scimschema/core_schemas/*.json",
+]
+homepage = "https://github.com/GordonSo/scimschema"
+repository = "https://github.com/GordonSo/scimschema"
+keywords = ["scimschema", "scim"]
+version = "0.2.74"
+
+[tool.poetry.dependencies]
+python = ">=3.6"
+
+[tool.poetry.dev-dependencies]
+pytest = "*"
+mypy = "*"
+isort = "*"
+pytest-cov = "*"
+black = "*"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

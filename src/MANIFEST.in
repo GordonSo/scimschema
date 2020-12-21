@@ -1,4 +1,0 @@
-include LICENSE
-include README.rst
-include scimschema/core_schemas/*.json
-recursive-exclude . *.pyc
