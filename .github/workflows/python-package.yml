@@ -113,7 +113,7 @@ jobs:
         poetry config pypi-token.testpypi $PYPI_TOKEN
         poetry config http-basic.testpypi "__token__" "${PYPI_TOKEN}"
         poetry config repositories.testpypi https://test.pypi.org/legacy/
-        poetry publish --build -r testpypi
+        poetry publish --build -r testpypi --no-interaction -vvv
 
     - name: Publish
       env:
@@ -125,4 +125,4 @@ jobs:
         poetry config pypi-token.pypi $PYPI_TOKEN
         poetry config http-basic.pypi "__token__" "${PYPI_TOKEN}"
         poetry config repositories.testpypi https://pypi.org/
-        poetry publish --build
+        poetry publish --build --no-interaction -vvv
