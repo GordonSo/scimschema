@@ -31,7 +31,7 @@ jobs:
       run: |
         curl -fsS -o get-poetry.py https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py
         python get-poetry.py -y
-        echo "##vso[task.setvariable variable=PATH]${PATH}:$HOME/.poetry/bin"
+        export $HOME/.poetry/env:$PATH
 
 
     - name: Configure poetry
@@ -48,13 +48,18 @@ jobs:
 
     - name: Ensure cache is healthy
       if: steps.cache.outputs.cache-hit == 'true'
-      run: poetry run pip --version >/dev/null 2>&1 || rm -rf .venv
+      run: |
+        source $HOME/.poetry/env
+        poetry run pip --version >/dev/null 2>&1 || rm -rf .venv
 
     - name: Install Dependencies
-      run: poetry install
+      run: |
+        source $HOME/.poetry/env
+        poetry install
 
     - name: Run tests
       run: |
+        source $HOME/.poetry/env
         poetry run black . --check
         poetry run isort . --check
         poetry run mypy ./scimschema ./tests
