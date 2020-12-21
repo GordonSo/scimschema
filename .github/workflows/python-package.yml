@@ -105,12 +105,12 @@ jobs:
 
     - name: Publish Test
       env:
-        PYPI_TOKEN: ${{ secrets.TEST_PYPI_API_TOKEN }}
+        TEST_PYPI_TOKEN: ${{ secrets.TEST_PYPI_API_TOKEN }}
       run: |
         source $HOME/.poetry/env
         export POETRY_PYPI_TOKEN_PYPI=$PYPI_TOKEN
 
-        poetry config pypi-token.testpypi $PYPI_TOKEN
+        poetry config pypi-token.testpypi $TEST_PYPI_TOKEN
         poetry config http-basic.testpypi "__token__" "${PYPI_TOKEN}"
         poetry config repositories.testpypi https://test.pypi.org/legacy/
         poetry publish --build -r testpypi --no-interaction -vvv
