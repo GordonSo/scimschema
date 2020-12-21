@@ -1,4 +1,4 @@
-# This workflows will upload a Python Package using Twine when a release is created
+# This workflows will upload a Python Package using Poetry when a release is created
 # For more information see: https://help.github.com/en/actions/language-and-framework-guides/using-python-with-github-actions#publishing-to-package-registries
 
 name: Upload Python Package
@@ -92,9 +92,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Get version
-      run: |
-        export ACTIONS_ALLOW_UNSECURE_COMMANDS=true
-        echo ::set-env name=version::$(cat ./scimschema/VERSION)
+      id: vars
+      run: echo ::set-output name=version::$(cat VERSION)
 
     - name: Checkout code
       uses: actions/checkout@master
@@ -105,8 +104,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
       with:
-        tag_name: v${{ env.version }}
-        release_name: Release v${{ env.version }}
+        tag_name: ${{ steps.vars.outputs.version }}
+        release_name: Release ${{ steps.vars.outputs.version }}
         body: |
           Changes in this Release
         draft: true
