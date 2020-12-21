@@ -4,12 +4,11 @@ import re
 import pytest
 
 from scimschema import core_schemas
-from scimschema._model.attribute import MultiValuedAttribute
-from scimschema._model.schema_response import ScimResponse
+from scimschema._model import ScimResponse
 
 from . import extension
 
-# ------------------------------The Following are method tests_scimschema ------------------------------ #
+# ------------------------------The Following are method tests ------------------------------ #
 
 
 def _dict_to_json(d):

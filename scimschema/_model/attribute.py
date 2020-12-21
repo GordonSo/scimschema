@@ -2,7 +2,7 @@ import collections
 import re
 from copy import deepcopy
 from datetime import datetime
-from typing import Any, Dict, List, Optional, Type, Union
+from typing import Any, List, Optional, Union
 
 from . import scim_exceptions
 
