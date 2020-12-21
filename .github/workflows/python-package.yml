@@ -1,0 +1,81 @@
+# This workflow will install Python dependencies, run tests and lint with a variety of Python versions
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
+
+name: Python package
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+
+  Test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v1
+      with:
+        python-version: '3.x'
+
+    - name: Install poetry
+      run: |
+        curl -fsS -o get-poetry.py https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py
+        python get-poetry.py -y
+
+    - name: Configure poetry
+      run: |
+        source $HOME/.poetry/env
+        poetry config virtualenvs.in-project true
+
+    - name: Set up cache
+      uses: actions/cache@v1
+      id: cache
+      with:
+        path: .venv
+        key: venv-${{ runner.os }}-${{ steps.full-python-version.outputs.version }}-${{ hashFiles('**/poetry.lock') }}
+
+    - name: Ensure cache is healthy
+      if: steps.cache.outputs.cache-hit == 'true'
+      run: |
+        source $HOME/.poetry/env
+        poetry run pip --version >/dev/null 2>&1 || rm -rf .venv
+
+    - name: Install Dependencies
+      run: |
+        source $HOME/.poetry/env
+        poetry install
+
+    - name: Run tests
+      run: |
+        source $HOME/.poetry/env
+        poetry run black . --check
+        poetry run isort . --check
+        poetry run mypy ./scimschema ./tests
+        poetry run pytest
+        
+  release:
+    name: Create Release
+    needs: Test
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@master
+
+    - name: Get version
+      id: vars
+      run: echo ::set-output name=version::$(cat scimschema/VERSION)
+
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+      with:
+        tag_name: ${{ steps.vars.outputs.version }}
+        release_name: Release ${{ steps.vars.outputs.version }}
+        body: |
+          Changes in this Release
+        draft: true
+        prerelease: true
