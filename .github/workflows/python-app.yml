@@ -31,6 +31,7 @@ jobs:
       run: |
         curl -fsS -o get-poetry.py https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py
         python get-poetry.py -y
+        export PATH="$HOME/.poetry/bin:$PATH"
         source $HOME/.poetry/env
 
     - name: Configure poetry
