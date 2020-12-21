@@ -82,8 +82,9 @@ Upcoming features
 Running the Test Suite
 ----------------------
 
-The project requires `pytest` to discover tests, and it integrates with `travis <https://github.com/GordonSo/scimschema/blob/master/.travis.yml>`_ to run on commit.
-If you use a Windows machine, there are helpful commands in the `go.bat <https://github.com/GordonSo/scimschema/blob/master/go.bat>`_ to get you started...
+The project requires `poetry`
+The project requires `pytest` to discover tests, and it complies to PEP 517 via Poetry (see pyproject.toml)
+Github Actions are to run on commit as part of CI and automatic deployments.
 
 
 Contributing
