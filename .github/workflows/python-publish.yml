@@ -91,12 +91,12 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     steps:
+    - name: Checkout code
+      uses: actions/checkout@master
+
     - name: Get version
       id: vars
       run: echo ::set-output name=version::$(cat scimschema/VERSION)
-
-    - name: Checkout code
-      uses: actions/checkout@master
 
     - name: Create Release
       id: create_release
