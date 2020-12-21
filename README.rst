@@ -87,6 +87,11 @@ The project requires `pytest` to discover tests, and it complies to PEP 517 via 
 Github Actions are to run on commit as part of CI and automatic deployments.
 
 
+Creating new release
+--------------------
+
+Update scimschema/VERSION and pyproject.toml
+
 Contributing
 ------------
 
