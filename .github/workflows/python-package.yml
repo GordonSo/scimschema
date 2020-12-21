@@ -124,5 +124,5 @@ jobs:
 
         poetry config pypi-token.pypi $PYPI_TOKEN
         poetry config http-basic.pypi "__token__" "${PYPI_TOKEN}"
-        poetry config repositories.testpypi https://pypi.org/
+        poetry config repositories.pypi https://pypi.org/
         poetry publish --build -r pypi --no-interaction -vvv
