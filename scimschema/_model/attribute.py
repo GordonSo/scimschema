@@ -535,7 +535,7 @@ class MultiValuedAttribute(Attribute):
         self.element_attribute.validate_schema()
 
     def _validate_uniqueness(self, list_values):
-        if self.uniqueness:
+        if self.uniqueness and self.uniqueness != "none":
             difference_values = [
                 item
                 for item, count in collections.Counter(list_values).items()

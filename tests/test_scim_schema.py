@@ -6,7 +6,7 @@ from . import extension
 
 
 # A sample schema, like what we'd get from response.get(<scim entity url>).json()
-def test_validate_invalid_repsonse():
+def test_validate_invalid_response():
     content = {
         "schemas": [
             "urn:ietf:params:scim:schemas:core:2.0:Group",
