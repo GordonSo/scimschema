@@ -7,7 +7,7 @@ from . import extension
 content = {
     "id": "2819c223-7f76-453a-919d-413861904646",
     "name": "2819c223-7f76-453a-919d-413861904646",
-    "schemas": [ "urn:ietf:params:scim:schemas:core:2.0:Schema" ],
+    "schemas": ["urn:ietf:params:scim:schemas:core:2.0:Schema"],
     "attributes": [
         {
             "name": "name",
@@ -87,7 +87,7 @@ content = {
             "returned": "default",
             "uniqueness": "none",
         }
-    ]
+    ],
 }
 
 
