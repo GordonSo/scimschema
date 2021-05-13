@@ -1,20 +1,21 @@
 import json
 import re
 from copy import deepcopy
-from typing import List, Optional
+from typing import Dict, List, Optional, TextIO
 
 from . import scim_exceptions
-from .attribute import AttributeFactory
+from .attribute import Attribute, AttributeFactory
 
 
 class Model(object):
-    id: Optional[str] = None
+    id: str = ""
     name: Optional[str] = None
     description: Optional[str] = None
-    attributes: List[dict] = []
+    attributes: List[Attribute] = []
 
-    def __init__(self, schema_data: dict):
-        self.id = schema_data.pop("id")
+    def __init__(self, schema_data: Dict):
+
+        self.id = schema_data.pop("id", "")
         self.external_id = schema_data.pop("externalId", None)
         self.meta = schema_data.pop("meta", None)
 
@@ -76,7 +77,7 @@ class Model(object):
             raise scim_exceptions.AggregatedScimSchemaExceptions(self.id, exceptions)
 
     def _validate_schema_id(self):
-        if self.id is None:
+        if not self.id:
             raise scim_exceptions.ModelInvalidPropertyException(
                 id=self.id,
                 property_name="id",
@@ -124,7 +125,7 @@ class Model(object):
             )
 
     @staticmethod
-    def load(file):
+    def load(file: TextIO) -> "Model":
         data = json.load(file)
         return Model(data)
 
