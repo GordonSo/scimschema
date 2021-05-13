@@ -440,7 +440,7 @@ class ComplexAttribute(Attribute):
             except scim_exceptions.ScimAttributeInvalidTypeException as iat:
                 exceptions.append(iat)
             except Exception as e:
-                exceptions.append(e)
+                exceptions.append(str(e))
 
         if len(exceptions) > 0:
             raise scim_exceptions.AggregatedScimMultValueAttributeValidationExceptions(
