@@ -19,7 +19,7 @@ include = [
 homepage = "https://github.com/GordonSo/scimschema"
 repository = "https://github.com/GordonSo/scimschema"
 keywords = ["scimschema", "scim"]
-version = "0.2.91"
+version = "0.2.92"
 
 
 [tool.poetry.dependencies]
