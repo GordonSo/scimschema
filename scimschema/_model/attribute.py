@@ -2,7 +2,7 @@ import collections
 import re
 from copy import deepcopy
 from datetime import datetime
-from typing import Any, List, Optional, Union
+from typing import Any, Dict, List, Optional, Type, Union
 
 from . import scim_exceptions
 
@@ -13,7 +13,7 @@ class Attribute:
 
     def __init__(
         self,
-        d: dict,
+        d: Dict,
         locator_path: Optional[List[str]],
         is_parent_multi_valued: bool = False,
         is_parent_complex: bool = False,
@@ -21,7 +21,7 @@ class Attribute:
     ):
         # default values see - https://tools.ietf.org/html/rfc7643#section-2.2
         # Characteristics # https://tools.ietf.org/html/rfc7643#section-7
-        self.__d: dict = d.copy() if not hasattr(self, "__d") is None else self.__d
+        self.__d: Dict = d.copy() if not hasattr(self, "__d") is None else self.__d
         self._is_parent_multi_valued = is_parent_multi_valued
         self._is_parent_complex = is_parent_complex
 
@@ -45,7 +45,7 @@ class Attribute:
 
     # https://tools.ietf.org/html/rfc7643#section-7
     # <editor-fold desc="validate meta attribute methods">
-    def _validate_schema_id(self):
+    def _validate_schema_id(self) -> None:
         if self.id is None:
             # todo - improve the message in this error
             raise scim_exceptions.ModelInvalidPropertyException(
@@ -70,7 +70,7 @@ class Attribute:
                 actual=self.name,
             )
 
-    def _validate_schema_required(self):
+    def _validate_schema_required(self) -> None:
         if not isinstance(self.required, bool):
             raise scim_exceptions.ModelAttributeCharacteristicNotAllowedException(
                 locator_path=self._locator_path,
@@ -79,7 +79,7 @@ class Attribute:
                 actual=self.required,
             )
 
-    def _validate_schema_canonical_values(self):
+    def _validate_schema_canonical_values(self) -> None:
         if self.canonicalValues is not None and not isinstance(
             self.canonicalValues, list
         ):
@@ -90,7 +90,7 @@ class Attribute:
                 actual=self.canonicalValues,
             )
 
-    def _validate_schema_case_exact(self):
+    def _validate_schema_case_exact(self) -> None:
         if self.caseExact not in self._accepted_case_exact_value:
             raise scim_exceptions.ModelAttributeCharacteristicNotAllowedException(
                 locator_path=self._locator_path,
@@ -99,7 +99,7 @@ class Attribute:
                 actual=self.caseExact,
             )
 
-    def _validate_schema_mutability(self):
+    def _validate_schema_mutability(self) -> None:
         # https://tools.ietf.org/html/rfc7643#section-7
         expected_values = {"readWrite", "readOnly", "immutable", "writeOnly"}
         if self.mutability not in expected_values:
@@ -110,7 +110,7 @@ class Attribute:
                 actual=self.mutability,
             )
 
-    def _validate_schema_returned(self):
+    def _validate_schema_returned(self) -> None:
         expected_values = {"default", "always", "never", "request"}
         if self.returned not in expected_values:
             raise scim_exceptions.ModelAttributeCharacteristicNotAllowedException(
@@ -120,7 +120,7 @@ class Attribute:
                 actual=self.returned,
             )
 
-    def _validate_schema_uniqueness(self):
+    def _validate_schema_uniqueness(self) -> None:
         if self.uniqueness not in self._accepted_uniqueness_value:
             raise scim_exceptions.ModelAttributeCharacteristicNotAllowedException(
                 locator_path=self._locator_path,
@@ -140,7 +140,7 @@ class Attribute:
 
     # </editor-fold>
 
-    def validate_schema(self):
+    def validate_schema(self) -> None:
         """
         :param raise_error:
         default True - scim_exceptions stored in global until delay_assert.assert_expections() is called
@@ -180,10 +180,10 @@ class Attribute:
             )
 
     @staticmethod
-    def _get_significant_value(d: dict) -> dict:
+    def _get_significant_value(d: Dict) -> Dict:
         return d
 
-    def _get_value(self, d: dict) -> str:
+    def _get_value(self, d: Dict) -> str:
         try:
             return d.pop(self.name)
         except KeyError:
@@ -347,7 +347,7 @@ class StringAttribute(Attribute):
 
     _link_reference = "https://tools.ietf.org/html/rfc7643#section-2.3.1"
 
-    def _validate(self, value):
+    def _validate(self, value) -> None:
         if not isinstance(value, str):
             raise scim_exceptions.ScimAttributeInvalidTypeException(
                 expected=self._d,
@@ -408,7 +408,7 @@ class ComplexAttribute(Attribute):
                 d, self._locator_path, self.name, self.multiValued
             )
 
-    def validate_schema(self):
+    def validate_schema(self) -> None:
         if self._is_parent_complex:
             # sub attribute of complex cannot be complex
             raise scim_exceptions.ModelAttributeCharacteristicNotAllowedException(
@@ -431,8 +431,8 @@ class ComplexAttribute(Attribute):
                 self._locator_path, exceptions=exceptions
             )
 
-    def _validate(self, value):
-        exceptions = []
+    def _validate(self, value) -> None:
+        exceptions: List[BaseException] = []
 
         for sa in self.subAttributes:
             try:
@@ -454,7 +454,7 @@ class MultiValuedAttribute(Attribute):
 
     def __init__(
         self,
-        d: dict,
+        d: Dict,
         locator_path: Optional[List[str]],
         is_parent_multi_valued: bool = False,
         is_parent_complex: bool = False,
@@ -495,7 +495,7 @@ class MultiValuedAttribute(Attribute):
     def _get_value(self, d):
         return self.element_attribute._get_value(d)
 
-    def _validate_schema_type(self):
+    def _validate_schema_type(self) -> None:
         if not isinstance(self.type, str):
             raise scim_exceptions.ModelAttributeCharacteristicNotAllowedException(
                 locator_path=self._locator_path,
@@ -504,7 +504,7 @@ class MultiValuedAttribute(Attribute):
                 actual=self.value,
             )
 
-    def _validate_schema_primary(self):
+    def _validate_schema_primary(self) -> None:
         if not isinstance(self.primary, bool):
             raise scim_exceptions.ModelAttributeCharacteristicNotAllowedException(
                 locator_path=self._locator_path,
@@ -513,7 +513,7 @@ class MultiValuedAttribute(Attribute):
                 actual=self.primary,
             )
 
-    def _validate_schema_display(self):
+    def _validate_schema_display(self) -> None:
         if not isinstance(self.display, str):
             raise scim_exceptions.ModelAttributeCharacteristicNotAllowedException(
                 locator_path=self.display,
@@ -522,7 +522,7 @@ class MultiValuedAttribute(Attribute):
                 actual=self.display,
             )
 
-    def _validate_schema_ref(self):
+    def _validate_schema_ref(self) -> None:
         if not isinstance(self.ref, str):
             raise scim_exceptions.ModelAttributeCharacteristicNotAllowedException(
                 locator_path=self.display,
@@ -531,10 +531,10 @@ class MultiValuedAttribute(Attribute):
                 actual=self.ref,
             )
 
-    def validate_schema(self):
+    def validate_schema(self) -> None:
         self.element_attribute.validate_schema()
 
-    def _validate_uniqueness(self, list_values):
+    def _validate_uniqueness(self, list_values: List[Any]) -> None:
         if self.uniqueness and self.uniqueness != "none":
             difference_values = [
                 item
@@ -546,7 +546,7 @@ class MultiValuedAttribute(Attribute):
                     locator=self._locator_path, value=difference_values
                 )
 
-    def _validate(self, value):
+    def _validate(self, value: List) -> None:
         if not isinstance(value, list):
             raise scim_exceptions.ScimAttributeInvalidTypeException(
                 self._d, self._locator_path, value, self.multiValued, "list"
@@ -582,7 +582,7 @@ class MultiValuedAttribute(Attribute):
             )
 
 
-attribute_factory = {
+attribute_factory: Dict[str, Type[Attribute]] = {
     "binary": BinaryAttribute,
     "boolean": BooleanAttribute,
     "datetime": DatetimeAttribute,
@@ -597,12 +597,12 @@ attribute_factory = {
 class AttributeFactory:
     @staticmethod
     def create(
-        d: dict,
+        d: Dict,
         locator_path: Union[str, Optional[List[str]]],
         attribute_type: str = None,
         is_parent_multi_valued: bool = False,
         is_parent_complex: bool = False,
-    ):
+    ) -> Attribute:
         if isinstance(locator_path, str):
             locator_path = [locator_path]
         elif isinstance(locator_path, list):

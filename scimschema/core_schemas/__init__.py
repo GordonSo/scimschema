@@ -3,6 +3,7 @@ import json
 import logging
 import os
 from pathlib import Path
+from typing import Dict
 
 from .._model.model import Model
 
@@ -19,7 +20,7 @@ scim_logger = logging.getLogger("pyscim")
 """
 
 
-def load_dict(path):
+def load_dict(path: str) -> Dict[str, Model]:
     """
     Dynamically load all the json files at the root of this module into a dictionary attribute "schema")
     The Key is the name of the json file (without extension)
@@ -29,7 +30,7 @@ def load_dict(path):
     user_schema = core2.schema["user"]
     """
 
-    def load(_path):
+    def load(_path) -> Model:
         try:
             with open(_path) as f:
                 module_name = Path(_path).stem
@@ -45,8 +46,8 @@ def load_dict(path):
             )
 
     return {
-        schema.id: schema
-        for schema in (load(path) for path in glob.glob(os.path.join(path, "*.json")))
+        _schema.id: _schema
+        for _schema in (load(path) for path in glob.glob(os.path.join(path, "*.json")))
     }
 
 
