@@ -14,11 +14,12 @@ include = [
     "VERSION",
     "README.rst",
     "scimschema/core_schemas/*.json",
+    "py.typed",
 ]
 homepage = "https://github.com/GordonSo/scimschema"
 repository = "https://github.com/GordonSo/scimschema"
 keywords = ["scimschema", "scim"]
-version = "0.2.90"
+version = "0.2.91"
 
 
 [tool.poetry.dependencies]
