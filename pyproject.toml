@@ -18,6 +18,7 @@ include = [
 ]
 homepage = "https://github.com/GordonSo/scimschema"
 repository = "https://github.com/GordonSo/scimschema"
+readme = "README.rst"
 keywords = ["scimschema", "scim"]
 version = "0.2.92"
 
