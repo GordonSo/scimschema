@@ -22,7 +22,6 @@ readme = "README.rst"
 keywords = ["scimschema", "scim"]
 version = "0.2.93"
 
-
 [tool.poetry.dependencies]
 python = ">=3.6"
 
