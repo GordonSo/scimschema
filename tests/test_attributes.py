@@ -185,7 +185,7 @@ def test_reference_meta_attribute():
 
 
 def test_datetime_meta_attribute():
-    schema = {"name": "birthday", "type": "datetime", "required": True}
+    schema = {"name": "birthday", "type": "dateTime", "required": True}
     maf = model.AttributeFactory.create(
         d=schema, locator_path="urn:ietf:params:scim:schemas:test:datetime_attribute"
     )
@@ -198,7 +198,7 @@ def test_datetime_meta_attribute():
 def test_invalid_datetime_meta_attribute():
     schema = {
         "name": "created",
-        "type": "datetime",
+        "type": "dateTime",
         "description": "The 'DateTime' that the resource was added to the service provider.  This attribute MUST be a DateTime.",
         "required": False,
     }
