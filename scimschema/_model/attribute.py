@@ -585,7 +585,7 @@ class MultiValuedAttribute(Attribute):
 attribute_factory: Dict[str, Type[Attribute]] = {
     "binary": BinaryAttribute,
     "boolean": BooleanAttribute,
-    "datetime": DatetimeAttribute,
+    "dateTime": DatetimeAttribute,
     "decimal": DecimalAttribute,
     "complex": ComplexAttribute,
     "integer": IntegerAttribute,

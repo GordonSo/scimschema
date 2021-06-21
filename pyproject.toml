@@ -20,7 +20,7 @@ homepage = "https://github.com/GordonSo/scimschema"
 repository = "https://github.com/GordonSo/scimschema"
 readme = "README.rst"
 keywords = ["scimschema", "scim"]
-version = "0.2.93"
+version = "0.2.94"
 
 [tool.poetry.dependencies]
 python = ">=3.6"
