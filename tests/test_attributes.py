@@ -53,6 +53,7 @@ def test_default_meta_attribute():
 
 def test_binary_attribute_validate():
     schema = {
+        "caseExact": True,
         "name": "data",
         "type": "binary",
         "required": True,

@@ -212,7 +212,7 @@ class Attribute:
 
 class BinaryAttribute(Attribute):
     _link_reference = "https://tools.ietf.org/html/rfc7643#section-2.3.6"
-    _accepted_case_exact_value = {False}
+    _accepted_case_exact_value = {True}
     _accepted_uniqueness_value = {"none"}
 
     def _validate(self, value):
